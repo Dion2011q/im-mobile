@@ -1,0 +1,297 @@
+/* Algemene styling */
+:root {
+    --primary-color: #007bff; /* Een mooie blauwe kleur voor accenten */
+    --secondary-color: #f8f9fa; /* Lichte achtergrondkleur voor secties */
+    --text-color: #1c2024; /* Donkere tekstkleur */
+    --heading-color: #3f4449; /* Kleur voor koppen */
+    --white: #ffffff; /* Witte kleur */
+    --border-color: #dee2e6; /* Kleur voor randen */
+}
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+    margin-bottom: 0.8em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header styling */
+header {
+    background-color: var(--heading-color);
+    color: var(--white);
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    color: var(--white);
+    margin: 0;
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    flex-wrap: wrap; /* Voor kleinere schermen */
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: var(--white);
+    font-weight: normal;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+header nav ul li a:hover, header nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Main content styling */
+main {
+    padding: 24px;
+    margin: 24px auto;
+}
+
+section {
+    background-color: var(--secondary-color);
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: var(--primary-color);
+    font-size: 2em;
+    position: relative;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Specifieke sectie styling */
+#home {
+    text-align: center;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('https://via.placeholder.com/1200x400?text=IM-Mobile+Header'); /* Placeholder afbeelding */
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#home h2 {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+}
+
+#home p {
+    font-size: 1.5em;
+    color: var(--text-color);
+    font-weight: bold;
+    line-height: 1.8;
+}
+
+#navigation ul {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#navigation ul li {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 20px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    flex: 1 1 250px; /* Flexibel formaat voor items */
+    max-width: 30%; /* Zorgt ervoor dat er maximaal 3 op een rij staan */
+}
+
+#navigation ul li:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+#about p {
+    text-align: center;
+    font-size: 1.1em;
+}
+
+#reviews ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#reviews ul li {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 5px;
+    font-style: italic;
+    color: var(--light-text-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#reviews ul li::before {
+    content: "\201C"; /* Links aanhalingsteken */
+    font-size: 2em;
+    color: var(--primary-color);
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+#reviews p:first-of-type { /* Voor de sterrenrating */
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+#contact p {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+#contact p a {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#contact p a:hover {
+    color: var(--primary-color);
+}
+
+#social-media ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#social-media ul li a {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#social-media ul li a:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+/* Footer styling */
+footer {
+    background-color: var(--heading-color);
+    color: var(--white);
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 30px;
+    font-size: 0.9em;
+}
+
+/* Responsieve aanpassingen */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        margin-top: 0.5rem;
+    }
+
+    header nav ul li {
+        margin: 5px 0;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    section {
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    #home h2 {
+        font-size: 2.2em;
+    }
+
+    #home p {
+        font-size: 1.2em;
+    }
+
+    #navigation ul li {
+        max-width: 100%; /* Stacks items on small screens */
+    }
+
+    #reviews ul {
+        grid-template-columns: 1fr; /* Reviews onder elkaar op kleine schermen */
+    }
+}
+
+@media (max-width: 480px) {
+    header nav ul li a {
+        padding: 8px;
+    }
+}
