@@ -45,10 +45,13 @@ header {
     color: var(--white);
     padding: 1rem 0;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
     top: 0;
     z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
 }
 
 header h1 {
@@ -61,12 +64,9 @@ header h1 {
 header nav ul {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    align-items: center;
+    justify-self: center;
     flex-wrap: wrap; /* Voor kleinere schermen */
-}
-
-header nav ul li {
-    margin: 0 15px;
 }
 
 header nav ul li a {
@@ -84,16 +84,16 @@ header nav ul li a:hover, header nav ul li a.active {
 }
 
 /* Main content styling */
+
 main {
-    padding: 24px;
-    margin: 24px auto;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
 section {
     background-color: var(--secondary-color);
-    padding: 40px;
     margin-bottom: 30px;
-    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease-in-out;
 }
@@ -117,28 +117,41 @@ section h2::after {
 }
 
 /* Specifieke sectie styling */
-#home {
+#hero {
     text-align: center;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('https://via.placeholder.com/1200x400?text=IM-Mobile+Header'); /* Placeholder afbeelding */
     background-size: cover;
-    background-position: center;
-    min-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 80vh;
+    background-image: url('/img/hero.png'); /* Voeg deze regel toe */
+    background-size: cover;
+    background-position: center;
+    position: relative; /* Voor stacking context */
 }
 
-#home h2 {
+.hero-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Beperk de hoogte van de afbeelding */
+    object-fit: cover; /* Zorgt ervoor dat de afbeelding goed schaalt */
+    margin-bottom: 20px; /* Ruimte tussen afbeelding en tekst */
+    z-index: 1;
+}
+
+#hero h2 {
     font-size: 3em;
     color: var(--primary-color);
     margin-bottom: 0.5em;
+    z-index: 2;
 }
 
-#home p {
+#hero p {
     font-size: 1.5em;
     color: var(--text-color);
     font-weight: bold;
     line-height: 1.8;
+    z-index: 2;
 }
 
 #navigation ul {
