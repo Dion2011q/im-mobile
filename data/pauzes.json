@@ -1,0 +1,13 @@
+{
+  "pauzes": [
+    {
+      "id": 1,
+      "datum": "2025-08-11",
+      "start": "08:00",
+      "eind": "17:00",
+      "beschrijving": "vrij",
+      "aangemaakt": "2025-08-07T10:58:30.539Z"
+    }
+  ],
+  "nextPauzeId": 2
+}

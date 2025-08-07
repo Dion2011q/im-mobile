@@ -115,3 +115,53 @@ section h2 {
     font-size: 2em;
     position: relative;
 }
+
+
+/* Telefoon selectie dropdowns */
+.telefoon-selectie {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.dropdown-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dropdown-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.dropdown-group select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.dropdown-group select:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.dropdown-group select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .telefoon-selectie {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .dropdown-group {
+    min-width: 100%;
+  }
+}

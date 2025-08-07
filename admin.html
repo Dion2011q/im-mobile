@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Admin - Geplande Reparaties</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-container">
+    <div id="adminLoginSection" class="login-section">
+      <div class="login-card">
+        <h1>Admin Panel</h1>
+        <h2>Admin Toegang</h2>
+        <form id="adminLoginForm" class="login-form">
+          <div class="form-group">
+            <label for="adminPassword">Admin Wachtwoord:</label>
+            <input type="password" id="adminPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Inloggen als Admin</button>
+        </form>
+        <button class="btn btn-secondary" onclick="window.location.href='index.html'">Terug naar Home</button>
+        <div id="loginMessage" class="message"></div>
+      </div>
+    </div>
+
+    <div id="adminPanelSection" class="admin-panel" style="display: none;">
+      <header class="admin-header">
+        <h1>Admin Panel</h1>
+        <div class="header-buttons">
+          <button class="btn btn-secondary" onclick="window.location.href='index.html'">Terug naar Home</button>
+          <button class="btn btn-danger" onclick="adminLogout()">Admin Uitloggen</button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <section class="settings-section">
+          <h2>Instellingen</h2>
+          <div id="instellingenSection">
+            <div class="settings-group">
+              <h3>Openingstijden Per Dag</h3>
+              <div id="dagTijden" class="dag-tijden-grid">
+                <div class="dag-tijd-item">
+                  <label>Maandag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="maandag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="maandag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="maandag_gesloten"> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Dinsdag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="dinsdag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="dinsdag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="dinsdag_gesloten"> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Woensdag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="woensdag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="woensdag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="woensdag_gesloten"> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Donderdag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="donderdag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="donderdag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="donderdag_gesloten"> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Vrijdag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="vrijdag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="vrijdag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="vrijdag_gesloten"> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Zaterdag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="zaterdag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="zaterdag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="zaterdag_gesloten" checked> Gesloten
+                    </label>
+                  </div>
+                </div>
+                <div class="dag-tijd-item">
+                  <label>Zondag:</label>
+                  <div class="tijd-inputs">
+                    <input type="time" id="zondag_start" value="08:00">
+                    <span>tot</span>
+                    <input type="time" id="zondag_eind" value="17:00">
+                    <label class="checkbox-label">
+                      <input type="checkbox" id="zondag_gesloten" checked> Gesloten
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <h3>Afspraak Duur</h3>
+              <div class="form-group">
+                <label for="afspraakDuur">Duur in minuten:</label>
+                <input type="number" id="afspraakDuur" value="15" min="5" max="120">
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <h3>Admin Wachtwoord Wijzigen</h3>
+              <div class="form-group">
+                <label for="nieuwAdminPassword">Nieuw admin wachtwoord:</label>
+                <input type="password" id="nieuwAdminPassword" placeholder="Nieuw wachtwoord">
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <h3>Pauzes</h3>
+              <div id="pauzesSection">
+                <div id="pauzeLijst" class="pauze-lijst"></div>
+                <div class="pauze-form">
+                  <h4>Nieuwe pauze toevoegen:</h4>
+                  <div class="pauze-inputs">
+                    <div class="form-group">
+                      <label for="pauzeDatum">Datum:</label>
+                      <input type="date" id="pauzeDatum">
+                    </div>
+                    <div class="form-group">
+                      <label for="pauzeStart">Van:</label>
+                      <input type="time" id="pauzeStart">
+                    </div>
+                    <div class="form-group">
+                      <label for="pauzeEind">Tot:</label>
+                      <input type="time" id="pauzeEind">
+                    </div>
+                    <div class="form-group">
+                      <label for="pauzeBeschrijving">Beschrijving:</label>
+                      <input type="text" id="pauzeBeschrijving" placeholder="Lunch, vergadering, etc.">
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="voegPauzeToe()">Pauze Toevoegen</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button class="btn btn-success" onclick="slaInstellingenOp()">Instellingen Opslaan</button>
+              <button class="btn btn-secondary" onclick="laadInstellingen()">Instellingen Laden</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="repairs-section">
+          <div class="section-header">
+            <h2>Geplande Reparaties</h2>
+            <button class="btn btn-primary" onclick="laadReparaties()">Vernieuwen</button>
+          </div>
+          <div id="reparatiesLijst" class="reparaties-lijst"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

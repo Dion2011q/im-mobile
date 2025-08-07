@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/index.css">
     <script src="/js/script.js" defer></script>
+    <script src="/js/index-repair.js" defer></script>
 
-    <!-- favicon -->
+ 
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
@@ -24,6 +25,7 @@
                 <li><a href="#about">Over ons</a></li>
                 <li><a href="#contact">Contact opnemen</a></li>
                 <li><a href="#social-media">Social Media</a></li>
+                <li><a href="reparatie.html">Reparatie Melden</a></li>
             </ul>
         </nav>
     </header>
@@ -32,6 +34,170 @@
             <h2>Welkom bij IM-Mobile</h2>
             <p>Verkoop.<br>Reparatie.<br>Service.</p>
         </section>
+        
+        <section id="reparatie-aanmelden">
+            <h2>Reparatie Aanmelden</h2>
+            <div id="reparatie-login-section">
+                <div class="repair-form-section">
+                    <h3>Inloggen</h3>
+                    <form id="index-loginForm">
+                        <div class="form-group">
+                            <label>Gebruikersnaam:</label>
+                            <input type="text" id="index-loginUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Wachtwoord:</label>
+                            <input type="password" id="index-loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn">Inloggen</button>
+                    </form>
+                </div>
+                
+                <div class="repair-form-section">
+                    <h3>Registreren</h3>
+                    <form id="index-registerForm">
+                        <div class="form-group">
+                            <label>Gebruikersnaam:</label>
+                            <input type="text" id="index-regUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="index-regEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Wachtwoord:</label>
+                            <input type="password" id="index-regPassword" required>
+                        </div>
+                        <button type="submit" class="btn">Registreren</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="reparatie-form-section" style="display: none;">
+                <p>Welkom <span id="index-welcomeUser"></span>! <button onclick="indexLogout()" class="btn btn-secondary">Uitloggen</button></p>
+                
+                <form id="index-repairForm">
+                    <div class="form-group">
+                        <label>Klant Naam:</label>
+                        <input type="text" id="index-klantNaam" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Wat voor telefoon heb je?</label>
+                        <div class="telefoon-selectie">
+                            <div class="dropdown-group">
+                                <label for="index-telefoonMerk">Merk:</label>
+                                <select id="index-telefoonMerk" required>
+                                    <option value="">Selecteer merk</option>
+                                    <option value="Apple">Apple</option>
+                                    <option value="Samsung">Samsung</option>
+                                    <option value="Google">Google</option>
+                                    <option value="OnePlus">OnePlus</option>
+                                    <option value="Xiaomi">Xiaomi</option>
+                                    <option value="Huawei">Huawei</option>
+                                    <option value="Oppo">Oppo</option>
+                                    <option value="Nothing">Nothing</option>
+                                    <option value="Fairphone">Fairphone</option>
+                                    <option value="Sony">Sony</option>
+                                    <option value="LG">LG</option>
+                                    <option value="Nokia">Nokia</option>
+                                    <option value="Motorola">Motorola</option>
+                                    <option value="HTC">HTC</option>
+                                    <option value="BlackBerry">BlackBerry</option>
+                                    <option value="Asus">Asus</option>
+                                    <option value="Vivo">Vivo</option>
+                                    <option value="TCL">TCL</option>
+                                    <option value="Honor">Honor</option>
+                                    <option value="Anders">Anders</option>
+                                </select>
+                            </div>
+                            <div class="dropdown-group">
+                                <label for="index-telefoonModel">Model:</label>
+                                <select id="index-telefoonModel" required disabled>
+                                    <option value="">Selecteer eerst een merk</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="index-andersTelefoonBeschrijving" style="display: none; margin-top: 10px;">
+                            <label>Beschrijf je telefoon:</label>
+                            <input type="text" id="index-andersTelefoonTekst" placeholder="Bijv. Huawei P30, OnePlus 9, etc.">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Wat is er mis met je telefoon?</label>
+                        <div class="problem-options">
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Scherm kapot" id="index-schermKapot">
+                                <span>Scherm kapot</span>
+                            </div>
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Batterij probleem" id="index-batterij">
+                                <span>Batterij probleem</span>
+                            </div>
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Laadpoort defect" id="index-laadpoort">
+                                <span>Laadpoort defect</span>
+                            </div>
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Camera werkt niet" id="index-camera">
+                                <span>Camera werkt niet</span>
+                            </div>
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Geluid problemen" id="index-geluid">
+                                <span>Geluid problemen</span>
+                            </div>
+                            <div class="checkbox-label">
+                                <input type="radio" name="index-probleem" value="Anders" id="index-anders">
+                                <span>Anders</span>
+                            </div>
+                        </div>
+                        <div id="index-andersBeschrijving" style="display: none; margin-top: 10px;">
+                            <label>Beschrijf het probleem:</label>
+                            <textarea id="index-andersTekst" rows="3" placeholder="Beschrijf wat er mis is met je telefoon..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Extra opmerkingen (optioneel):</label>
+                        <textarea id="index-beschrijving" rows="3" placeholder="Eventuele extra informatie..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Datum:</label>
+                        <input type="date" id="index-datum" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tijd:</label>
+                        <select id="index-tijd" required>
+                            <option value="">Selecteer eerst een datum</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn">Reparatie Inplannen En Offerte Aanvragen</button>
+                </form>
+            </div>
+            
+            <div id="index-bevestigingSection" style="display: none;">
+                <h3>Bevestig je gegevens</h3>
+                <div class="confirmation-details">
+                    <p><strong>Klant:</strong> <span id="index-confirmKlantNaam"></span></p>
+                    <p><strong>Telefoon:</strong> <span id="index-confirmTelefoonModel"></span></p>
+                    <p><strong>Probleem:</strong> <span id="index-confirmProbleem"></span></p>
+                    <p><strong>Beschrijving:</strong> <span id="index-confirmBeschrijving"></span></p>
+                    <p><strong>Datum:</strong> <span id="index-confirmDatum"></span></p>
+                    <p><strong>Tijd:</strong> <span id="index-confirmTijd"></span></p>
+                </div>
+                <div class="confirmation-buttons">
+                    <button onclick="indexBevestigReparatie()" class="btn">Bevestigen</button>
+                    <button onclick="indexWijzigGegevens()" class="btn btn-secondary">Wijzigen</button>
+                </div>
+            </div>
+            
+            <div id="index-message"></div>
+        </section>
+        
         <section id="navigation">
             <ul>
                 <li>Reparatie melden</li>

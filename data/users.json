@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "test7",
+      "email": "jkldf@gmail.com",
+      "password": "test",
+      "aangemaakt": "2025-08-07T10:40:55.808Z"
+    },
+    {
+      "id": 2,
+      "username": "Jjj",
+      "email": "jj@gmail.com",
+      "password": "jjj",
+      "aangemaakt": "2025-08-07T10:56:12.396Z"
+    },
+    {
+      "id": 3,
+      "username": "kanker",
+      "email": "kanker@gmail.com",
+      "password": "kanker",
+      "aangemaakt": "2025-08-07T11:06:40.424Z"
+    },
+    {
+      "id": 4,
+      "username": "gfd",
+      "email": "gfd@gmail.com",
+      "password": "admin123",
+      "aangemaakt": "2025-08-07T11:22:15.039Z"
+    },
+    {
+      "id": 5,
+      "username": "klank",
+      "email": "klank@a.com",
+      "password": "klank",
+      "aangemaakt": "2025-08-07T13:21:28.731Z"
+    },
+    {
+      "id": 6,
+      "username": "Waseem",
+      "email": "wy9024294@gmail.com",
+      "password": "WY222IWWHR R2223RJRJRJRJRNRNFNF",
+      "aangemaakt": "2025-08-07T13:58:27.687Z"
+    },
+    {
+      "id": 7,
+      "username": "test",
+      "email": "test@gmail.com",
+      "password": "test",
+      "aangemaakt": "2025-08-07T14:19:45.776Z"
+    },
+    {
+      "id": 8,
+      "username": "waseem",
+      "email": "KANKER@gmIL.COM",
+      "password": "geheim",
+      "aangemaakt": "2025-08-07T15:28:00.881Z"
+    }
+  ],
+  "nextUserId": 9
+}

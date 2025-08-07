@@ -1,0 +1,43 @@
+{
+  "startTijd": "08:00",
+  "eindTijd": "17:00",
+  "afspraakDuur": 15,
+  "adminPassword": "geheim",
+  "dagTijden": {
+    "maandag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": false
+    },
+    "dinsdag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": false
+    },
+    "woensdag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": false
+    },
+    "donderdag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": false
+    },
+    "vrijdag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": false
+    },
+    "zaterdag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": true
+    },
+    "zondag": {
+      "start": "08:00",
+      "eind": "17:00",
+      "gesloten": true
+    }
+  }
+}
