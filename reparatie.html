@@ -1,139 +1,320 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Reparatie Inplannen</title>
+  <title>Reparatie Inplannen - IM-Mobile</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    /* Define CSS variables for theming */
+    :root {
+      --background-color: #ffffff;
+      --text-color: #333333;
+      --heading-color: #0056b3;
+      --form-background: #f5f5f5;
+      --input-border: #ddd;
+      --button-primary-bg: #007bff;
+      --button-primary-hover-bg: #0056b3;
+      --button-secondary-bg: #6c757d;
+      --button-secondary-hover-bg: #545b62;
+      --button-success-bg: #28a745;
+      --button-success-hover-bg: #218838;
+      --checkbox-hover-bg: #f0f0f0;
+      --problem-option-border: #e0e0e0;
+      --problem-option-hover-border: #007bff;
+      --problem-option-checked-bg: #e3f2fd;
+      --problem-option-checked-text: #007bff;
+      --confirmation-details-bg: white;
+      --confirmation-details-border: #ddd;
+      --detail-row-border: #f0f0f0;
+    }
+
+    /* Dark mode variables */
+    [data-theme="dark"] {
+      --background-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --heading-color: #90caf9; /* Light blue for headings in dark mode */
+      --form-background: #2c2c2c;
+      --input-border: #444;
+      --button-primary-bg: #007bff; /* Keep primary blue consistent */
+      --button-primary-hover-bg: #0056b3;
+      --button-secondary-bg: #424242;
+      --button-secondary-hover-bg: #555555;
+      --button-success-bg: #28a745;
+      --button-success-hover-bg: #218838;
+      --checkbox-hover-bg: #3a3a3a;
+      --problem-option-border: #444;
+      --problem-option-hover-border: #90caf9;
+      --problem-option-checked-bg: #2c3e50; /* Darker blue for checked radio */
+      --problem-option-checked-text: #90caf9; /* Light blue for checked radio text */
+      --confirmation-details-bg: #2c2c2c;
+      --confirmation-details-border: #444;
+      --detail-row-border: #3a3a3a;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Align to the top */
+      min-height: 100vh;
+      padding-top: 20px; /* Add some space at the top */
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background-color: rgba(0, 0, 0, 0.1); /* Slight background on hover */
+    }
+
+    [data-theme="dark"] .theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-toggle svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text-color);
+    }
+
     .repair-container {
       max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
+      width: 100%; /* Ensure it takes available width up to max-width */
+      margin: 20px auto; /* Center the container and add top/bottom margin */
+      padding: 30px; /* Increased padding for better spacing */
+      background-color: var(--form-background); /* Use form background for container */
+      border-radius: 12px; /* More rounded corners */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
     }
-    
+
+    [data-theme="dark"] .repair-container {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Darker shadow for dark mode */
+    }
+
+    h1 {
+      color: var(--heading-color);
+      text-align: center;
+      margin-bottom: 30px; /* Increased margin */
+      font-size: 2.5em; /* Larger heading */
+      font-weight: 700; /* Bolder text */
+    }
+
+    h2 {
+      color: var(--heading-color);
+      margin-bottom: 20px; /* Increased margin */
+      font-size: 1.8em;
+      border-bottom: 2px solid var(--heading-color); /* Underline for headings */
+      padding-bottom: 5px;
+    }
+
+    p {
+        color: var(--text-color);
+        margin-bottom: 15px;
+        font-size: 1.1em;
+    }
+
     .form-section {
-      background: #f5f5f5;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
+      background: var(--form-background);
+      padding: 30px; /* Increased padding */
+      margin: 30px 0; /* Increased margin */
+      border-radius: 10px; /* More rounded corners */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow for sections */
     }
-    
-    .form-section h2 {
-      color: #333;
-      margin-bottom: 15px;
+
+    [data-theme="dark"] .form-section {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    
+
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px; /* Increased margin */
     }
-    
+
     .form-group label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin-bottom: 8px; /* Increased margin */
+      font-weight: 600; /* Slightly bolder labels */
+      color: var(--text-color);
+      font-size: 1.1em;
     }
-    
-    .form-group input,
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 12px; /* Increased padding */
+      border: 1px solid var(--input-border);
+      border-radius: 6px; /* More rounded input fields */
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      font-size: 1em;
+      background-color: var(--background-color); /* Ensure input background matches page */
+      color: var(--text-color);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--heading-color); /* Highlight border on focus */
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Subtle glow on focus */
     }
     
+    [data-theme="dark"] .form-group input:focus,
+    [data-theme="dark"] .form-group textarea:focus,
+    [data-theme="dark"] .form-group select:focus {
+        box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.25); /* Lighter glow for dark mode */
+    }
+
     .btn {
-      background: #007bff;
+      background: var(--button-primary-bg);
       color: white;
-      padding: 10px 20px;
+      padding: 12px 25px; /* More padding */
       border: none;
-      border-radius: 4px;
+      border-radius: 6px; /* Rounded buttons */
       cursor: pointer;
       margin: 5px;
+      font-size: 1.1em;
+      font-weight: 600; /* Bolder button text */
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+      display: inline-block; /* Ensure proper display */
     }
-    
+
     .btn:hover {
-      background: #0056b3;
+      background: var(--button-primary-hover-bg);
+      transform: translateY(-2px); /* Slight lift on hover */
     }
-    
+
     .btn-secondary {
-      background: #6c757d;
+      background: var(--button-secondary-bg);
     }
-    
+
     .btn-secondary:hover {
-      background: #545b62;
+      background: var(--button-secondary-hover-bg);
+      transform: translateY(-2px);
     }
     
+    .btn-success {
+      background: var(--button-success-bg);
+    }
+
+    .btn-success:hover {
+      background: var(--button-success-hover-bg);
+      transform: translateY(-2px);
+    }
+
     .message {
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 4px;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 500;
     }
-    
+
     .message.success {
       background: #d4edda;
       color: #155724;
       border: 1px solid #c3e6cb;
     }
-    
+
     .message.error {
       background: #f8d7da;
       color: #721c24;
       border: 1px solid #f1b0b7;
     }
-    
+
     .nav-buttons {
       text-align: center;
-      margin: 20px 0;
+      margin: 30px 0; /* Increased margin */
+      padding-top: 20px; /* Add some space above nav buttons */
+      border-top: 1px solid var(--detail-row-border); /* Separator line */
     }
-    
+
+    .nav-buttons h3 {
+      color: var(--heading-color);
+      margin-bottom: 20px;
+      font-size: 1.6em;
+    }
+
+    .nav-buttons .btn {
+      margin: 10px 15px; /* Adjusted margin for buttons */
+      padding: 12px 28px; /* Consistent padding */
+    }
+
     .checkbox-group {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 10px;
       margin-top: 10px;
     }
-    
+
     .checkbox-label {
       display: flex;
       align-items: center;
       font-weight: normal;
       cursor: pointer;
-      padding: 8px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
+      padding: 10px; /* Increased padding */
+      border-radius: 6px;
+      transition: background-color 0.2s ease-in-out;
+      background-color: var(--background-color); /* Match input background */
+      border: 1px solid var(--input-border); /* Add border to checkboxes */
     }
-    
+
     .checkbox-label:hover {
-      background-color: #f0f0f0;
+      background-color: var(--checkbox-hover-bg);
+      border-color: var(--heading-color); /* Highlight border on hover */
     }
-    
+
     .checkbox-label input[type="checkbox"] {
       width: auto;
-      margin-right: 8px;
+      margin-right: 10px; /* Increased margin */
       margin-bottom: 0;
+      transform: scale(1.2); /* Slightly larger checkboxes */
+      accent-color: var(--button-primary-bg); /* Color for checkboxes */
     }
     
+    [data-theme="dark"] .checkbox-label input[type="checkbox"] {
+        accent-color: #90caf9; /* Lighter blue for checkboxes in dark mode */
+    }
+
     .checkbox-label span {
       margin-bottom: 0;
     }
 
     .confirmation-details {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0;
-      border: 1px solid #ddd;
+      background: var(--confirmation-details-bg);
+      padding: 25px; /* Increased padding */
+      border-radius: 10px;
+      margin: 25px 0; /* Increased margin */
+      border: 1px solid var(--confirmation-details-border);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Inner shadow for depth */
     }
 
     .detail-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
+      padding: 12px 0; /* Increased padding */
+      border-bottom: 1px solid var(--detail-row-border);
     }
 
     .detail-row:last-child {
@@ -141,30 +322,36 @@
     }
 
     .detail-row strong {
-      min-width: 120px;
-      color: #333;
+      min-width: 150px; /* Slightly wider label */
+      color: var(--text-color);
+      font-size: 1.1em;
+      flex-shrink: 0; /* Prevent shrinking */
+      padding-right: 15px; /* Space between label and value */
     }
 
     .detail-row span {
       flex: 1;
       text-align: right;
       word-wrap: break-word;
+      color: var(--text-color); /* Ensure text color is consistent */
+      font-size: 1.1em;
     }
 
     .confirmation-buttons {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 24px; /* Adjusted margin */
     }
 
     .confirmation-buttons .btn {
-      margin: 0 10px;
+      margin: 0 12px; /* Adjusted margin */
+      padding: 12px 30px; /* More button padding */
     }
 
     .problem-options {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
+      gap: 15px; /* Increased gap */
+      margin-top: 15px; /* Increased margin */
     }
 
     .problem-options .checkbox-label {
@@ -172,43 +359,125 @@
       align-items: center;
       font-weight: normal;
       cursor: pointer;
-      padding: 12px;
-      border: 2px solid #e0e0e0;
+      padding: 15px; /* Increased padding */
+      border: 2px solid var(--problem-option-border);
       border-radius: 8px;
       transition: all 0.3s ease;
-      background: white;
+      background: var(--background-color); /* Match input background */
+      justify-content: center; /* Center content */
+      text-align: center; /* Center text */
+      height: 100%; /* Ensure full height */
     }
 
     .problem-options .checkbox-label:hover {
-      border-color: #007bff;
-      background-color: #f8f9ff;
+      border-color: var(--problem-option-hover-border);
+      background-color: var(--problem-option-checked-bg); /* Use checked background for hover */
     }
 
     .problem-options .checkbox-label input[type="radio"] {
       width: auto;
-      margin-right: 10px;
+      margin-right: 12px; /* Increased margin */
       margin-bottom: 0;
+      transform: scale(1.3); /* Larger radio buttons */
+      accent-color: var(--button-primary-bg); /* Color for radio buttons */
+    }
+
+    [data-theme="dark"] .problem-options .checkbox-label input[type="radio"] {
+        accent-color: #90caf9; /* Lighter blue for radio buttons in dark mode */
     }
 
     .problem-options .checkbox-label input[type="radio"]:checked + span {
       font-weight: bold;
-      color: #007bff;
+      color: var(--problem-option-checked-text);
     }
 
     .problem-options .checkbox-label:has(input[type="radio"]:checked) {
-      border-color: #007bff;
-      background-color: #e3f2fd;
+      border-color: var(--problem-option-checked-text);
+      background-color: var(--problem-option-checked-bg);
     }
+
+    .welcome-message {
+      background-color: var(--form-background);
+      padding: 15px 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      border-left: 5px solid var(--heading-color); /* Accent border */
+    }
+
+    .welcome-message p {
+      margin-bottom: 0;
+      font-size: 1.15em;
+      color: var(--text-color);
+    }
+
+    .welcome-message .btn-secondary {
+      padding: 8px 15px;
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+    
+    .telefoon-selectie {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .dropdown-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dropdown-group label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-color);
+        font-size: 1.1em;
+    }
+
+    .dropdown-group select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--input-border);
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 1em;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        cursor: pointer;
+    }
+
+    .dropdown-group select:focus {
+        border-color: var(--heading-color);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    [data-theme="dark"] .dropdown-group select:focus {
+        box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.25);
+    }
+
   </style>
 </head>
-<body>
+<body data-theme="light"> <!-- Default theme is light -->
+
+  <!-- Dark mode toggle -->
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+      </svg>
+      <svg class="moon-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd"/>
+      </svg>
+  </button>
+
   <div class="repair-container">
-    <h1>Reparatie Systeem</h1>
-    
-   
+    <h1>📱 Reparatie Systeem</h1>
+
     <div id="loginSection">
       <div class="form-section">
-        <h2>Inloggen</h2>
+        <h2>🔐 Inloggen</h2>
+        <p>Welkom bij het IM-Mobile reparatie systeem. Log in met uw bestaande account of registreer een nieuwe account.</p>
         <form id="loginForm">
           <div class="form-group">
             <label>Gebruikersnaam:</label>
@@ -221,9 +490,10 @@
           <button type="submit" class="btn">Inloggen</button>
         </form>
       </div>
-      
+
       <div class="form-section">
-        <h2>Registreren</h2>
+        <h2>📝 Nieuwe Account Registreren</h2>
+        <p>Nog geen account? Registreer hier voor een nieuwe account om reparaties in te plannen.</p>
         <form id="registerForm">
           <div class="form-group">
             <label>Gebruikersnaam:</label>
@@ -242,12 +512,15 @@
       </div>
     </div>
 
-    
     <div id="reparatieSection" style="display: none;">
       <div id="reparatieForm" class="form-section">
-        <h2>Reparatie Inplannen</h2>
-        <p>Welkom <span id="welcomeUser"></span>! <button onclick="logout()" class="btn btn-secondary">Uitloggen</button></p>
-        
+        <h2>📋 Reparatie Inplannen</h2>
+        <div class="welcome-message">
+          <p>👋 Welkom <span id="welcomeUser"></span>! 
+            <button onclick="logout()" class="btn btn-secondary" style="margin-left: 15px;">Uitloggen</button>
+          </p>
+        </div>
+
         <form id="repairForm">
           <div class="form-group">
             <label>Klant Naam:</label>
@@ -296,38 +569,38 @@
             <label>Welk telefoon model?</label>
             <input type="text" id="andersTelefoonTekst" placeholder="Bijv. OnePlus 11, Xiaomi Mi 13, etc.">
           </div>
-          
+
           <div class="form-group">
             <label>Wat is er mis met je telefoon?</label>
             <div class="problem-options">
-              <div class="checkbox-label">
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Kapot scherm" id="kapotScherm">
                 <span>Kapot scherm</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Batterij probleem" id="batterij">
                 <span>Batterij probleem</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Laadpoort werkt niet" id="laadpoort">
                 <span>Laadpoort werkt niet</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Camera werkt niet" id="camera">
                 <span>Camera werkt niet</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Telefoon start niet op" id="startNiet">
                 <span>Telefoon start niet op</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Waterschade" id="waterschade">
                 <span>Waterschade</span>
-              </div>
-              <div class="checkbox-label">
+              </label>
+              <label class="checkbox-label">
                 <input type="radio" name="probleem" value="Anders" id="anders">
                 <span>Anders</span>
-              </div>
+              </label>
             </div>
           </div>
 
@@ -340,26 +613,36 @@
             <label>Extra opmerkingen (optioneel):</label>
             <textarea id="beschrijving" rows="3" placeholder="Eventuele extra informatie..."></textarea>
           </div>
-          
+
           <div class="form-group">
             <label>Datum:</label>
             <input type="date" id="datum" required>
           </div>
-          
+
           <div class="form-group">
             <label>Tijd:</label>
             <select id="tijd" required>
               <option value="">Selecteer eerst een datum</option>
             </select>
           </div>
-          
+
+          <div class="form-group">
+            <label class="checkbox-label" style="display: flex; align-items: flex-start; background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px;">
+              <input type="checkbox" id="acceptTerms" required style="margin-right: 10px; margin-top: 5px; transform: scale(1.2);">
+              <span style="flex: 1;">
+                Ik ga akkoord met de <a href="algemene-voorwaarden.html" target="_blank" style="color: #007bff; text-decoration: underline;">Algemene Voorwaarden</a> en begrijp dat ik <strong>verplicht ben om op te dagen</strong> voor mijn afspraak. Bij het niet verschijnen kunnen er kosten in rekening worden gebracht.
+              </span>
+            </label>
+          </div>
+
           <button type="submit" class="btn">Controleer Gegevens</button>
         </form>
       </div>
 
       <div id="bevestigingSection" class="form-section" style="display: none;">
-        <h2>Controleer je Gegevens</h2>
-        
+        <h2>✅ Controleer je Gegevens</h2>
+        <p>Controleer of alle gegevens correct zijn voordat u de reparatie bevestigt.</p>
+
         <div class="confirmation-details">
           <div class="detail-row">
             <strong>Klant Naam:</strong>
@@ -388,21 +671,68 @@
         </div>
 
         <div class="confirmation-buttons">
-          <button onclick="bevestigReparatie()" class="btn">Bevestigen</button>
-          <button onclick="wijzigGegevens()" class="btn btn-secondary">Wijzigen</button>
+          <button onclick="bevestigReparatie()" class="btn btn-success">✓ Bevestigen</button>
+          <button onclick="wijzigGegevens()" class="btn btn-secondary">✏️ Wijzigen</button>
         </div>
       </div>
-      
+
       <div class="nav-buttons">
-        <button onclick="window.location.href='admin.html'" class="btn">Naar Admin Pagina</button>
-        <button onclick="window.location.href='account.html'" class="btn">Mijn Account</button>
-        <button onclick="window.location.href='index.html'" class="btn btn-secondary">Terug naar Hoofdpagina</button>
+        <h3>🔗 Navigatie</h3>
+        <button onclick="window.location.href='admin.html'" class="btn">⚙️ Admin Pagina</button>
+        <button onclick="window.location.href='account.html'" class="btn btn-success">👤 Mijn Account</button>
+        <button onclick="window.location.href='index.html'" class="btn btn-secondary">🏠 Terug naar Home</button>
       </div>
     </div>
-    
+
     <div id="message"></div>
   </div>
 
+  <script src="js/script.js"></script>
   <script src="js/repair-system.js"></script>
+  <script>
+    // Basic theme toggle functionality
+    function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme); // Save theme preference
+
+        // Update icon visibility
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        if (newTheme === 'dark') {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+    }
+
+    // Initialize theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        const body = document.body;
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        } else {
+            // Default to light theme if no preference saved
+            body.setAttribute('data-theme', 'light');
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+    });
+  </script>
 </body>
 </html>

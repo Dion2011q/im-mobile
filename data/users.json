@@ -62,7 +62,28 @@
       "email": "dion.p.dogger@protonmail.com",
       "password": "12345678",
       "aangemaakt": "2025-08-12T13:46:19.296Z"
+    },
+    {
+      "id": 10,
+      "username": "Kanker",
+      "email": "kan231231ker@gmail.com",
+      "password": "kanekr",
+      "aangemaakt": "2025-08-12T19:05:17.372Z"
+    },
+    {
+      "id": 11,
+      "username": "test1",
+      "email": "testing@gmail.com",
+      "password": "test1",
+      "aangemaakt": "2025-08-12T19:07:29.529Z"
+    },
+    {
+      "id": 12,
+      "username": "iwueydfoweuyfowue",
+      "email": "jhskfjewhrfiulheroi@gmail.com",
+      "password": "oiewrutepiroutper",
+      "aangemaakt": "2025-08-12T19:10:10.244Z"
     }
   ],
-  "nextUserId": 10
+  "nextUserId": 13
 }

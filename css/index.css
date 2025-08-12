@@ -1,48 +1,138 @@
 #hero {
-    text-align: left;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 90vh;
-    background-image: url('/img/hero.png'); /* Voeg deze regel toe */
+    background-image: url('/img/hero.png');
     background-size: cover;
     background-position: center;
-    position: relative; /* Voor stacking context */
-    padding: 24px;
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #hero::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.2); /* Donkere overlay */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1;
 }
 
-.hero-image {
-    width: 100%;
-    height: auto;
-    max-height: 400px; /* Beperk de hoogte van de afbeelding */
-    object-fit: cover; /* Zorgt ervoor dat de afbeelding goed schaalt */
-    margin-bottom: 20px; /* Ruimte tussen afbeelding en tekst */
-    z-index: 1;
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--white);
+    max-width: 1000px;
+    padding: 40px 20px;
+}
+
+.hero-subtitle {
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: #ffc107;
+    font-weight: bold;
 }
 
 #hero h2 {
-    text-align: left;
-    font-size: 3em;
-    color: var(--primary-color);
-    margin-bottom: 0.5em;
-    z-index: 2;
+    font-size: 3.5em;
+    font-weight: bold;
+    margin-bottom: 25px;
+    line-height: 1.2;
 }
 
-#hero p {
-    font-size: 1.5em;
-    color: var(--light-text-color);
-    font-weight: bold;
+#hero h2 .highlight {
+    color: #00d4ff;
+}
+
+.hero-description {
+    font-size: 1.2em;
     line-height: 1.6;
-    z-index: 2;
+    margin-bottom: 40px;
+    color: #e8e8e8;
+}
+
+.hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 200px;
+}
+
+.feature .icon {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+.feature span:last-child {
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.hero-cta {
+    font-size: 1.1em;
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Guarantee section */
+#guarantee {
+    text-align: center;
+    background-color: var(--white);
+    padding: 60px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#guarantee h2 {
+    font-size: 2.5em;
+    color: var(--heading-color);
+    margin-bottom: 15px;
+}
+
+.guarantee-subtitle {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.guarantee-features {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.guarantee-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.guarantee-icon {
+    font-size: 3em;
+    color: #28a745;
+}
+
+.guarantee-item span:last-child {
+    font-weight: bold;
+    color: var(--heading-color);
+    font-size: 1.1em;
 }
 
 #reparatie {
@@ -79,37 +169,93 @@
     font-size: 1.1em;
 }
 
+/* Reviews section styling */
+#reviews {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+}
+
+#reviews h2 {
+    color: var(--heading-color);
+    font-size: 2.2em;
+    margin-bottom: 15px;
+}
+
+#reviews p:first-of-type { /* Voor de sterrenrating */
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #ffc107;
+    margin-bottom: 10px;
+}
+
+#reviews p:first-of-type::before {
+    content: "⭐⭐⭐⭐⭐ ";
+    margin-right: 10px;
+}
+
+#reviews > p:nth-of-type(2) {
+    color: var(--primary-color);
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
 #reviews ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #reviews ul li {
     background-color: var(--white);
     border: 1px solid var(--border-color);
-    padding: 20px;
-    border-radius: 5px;
+    padding: 25px;
+    border-radius: 12px;
     font-style: italic;
-    color: var(--light-text-color);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    line-height: 1.6;
+}
+
+#reviews ul li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 #reviews ul li::before {
-    content: "\201C"; /* Links aanhalingsteken */
-    font-size: 2em;
+    content: "\201C";
+    font-size: 3em;
     color: var(--primary-color);
-    margin-right: 5px;
-    vertical-align: middle;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    opacity: 0.3;
 }
 
-#reviews p:first-of-type { /* Voor de sterrenrating */
-    text-align: center;
-    font-size: 1.3em;
-    font-weight: bold;
+#reviews ul li::after {
+    content: "\201D";
+    font-size: 3em;
     color: var(--primary-color);
-    margin-bottom: 15px;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    opacity: 0.3;
+}
+
+#reviews ul li strong {
+    color: var(--primary-color);
+    font-style: normal;
+    font-weight: 600;
+    margin-top: 10px;
+    display: inline-block;
 }
 
 #contact p {
@@ -124,6 +270,89 @@
 
 #contact p a:hover {
     color: var(--primary-color);
+}
+
+/* Team section styling */
+#team {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#team h2 {
+    color: var(--heading-color);
+    font-size: 2.2em;
+    margin-bottom: 15px;
+}
+
+#team > p {
+    color: var(--primary-color);
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.team-list {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Team member styling */
+.team-member {
+    text-align: center;
+    width: 250px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.team-member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.team-member img:hover {
+    transform: scale(1.05);
+}
+
+.team-member:not(:has(img)) {
+    padding-top: 40px;
+}
+
+.team-member:not(:has(img)) h3 {
+    margin-top: 0;
+}
+
+.team-member h3 {
+    color: var(--heading-color);
+    margin: 10px 0 5px 0;
+    font-size: 1.2em;
+}
+
+.team-member p {
+    color: var(--primary-color);
+    font-style: italic;
+    margin: 0;
 }
 
 #social-media ul {
@@ -159,17 +388,45 @@ footer {
 
 /* Responsieve aanpassingen */
 @media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .contact-info span {
+        margin-right: 10px;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
     header h1 {
         font-size: 2em;
     }
 
     header nav ul {
         flex-direction: column;
-        margin-top: 0.5rem;
+        gap: 15px;
     }
 
-    header nav ul li {
-        margin: 5px 0;
+    #hero h2 {
+        font-size: 2.5em;
+    }
+
+    .hero-features {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .guarantee-features {
+        flex-direction: column;
+        gap: 40px;
     }
 
     main {
@@ -181,19 +438,11 @@ footer {
         margin-bottom: 20px;
     }
 
-    #home h2 {
-        font-size: 2.2em;
-    }
-
-    #home p {
-        font-size: 1.2em;
-    }
-
     #navigation ul li {
-        max-width: 100%; /* Stacks items on small screens */
+        max-width: 100%;
     }
 
     #reviews ul {
-        grid-template-columns: 1fr; /* Reviews onder elkaar op kleine schermen */
+        grid-template-columns: 1fr;
     }
 }

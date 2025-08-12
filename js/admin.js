@@ -34,6 +34,8 @@ function showAdminPanel() {
   document.getElementById('adminPanelSection').style.display = 'block';
   laadReparaties();
   laadInstellingen();
+  laadVerkoopMerken();
+  laadVerkoopPrijzen();
 }
 
 function adminLogout() {
@@ -490,6 +492,129 @@ async function maakAfspraakOfferte() {
     }
   } catch (error) {
     alert('Fout bij aanmaken van offerte');
+  }
+}
+
+// Sales price management
+const telefoonModellenAdmin = {
+    'Apple': ['iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15 Plus', 'iPhone 15', 'iPhone 14 Pro Max', 'iPhone 14 Pro', 'iPhone 14 Plus', 'iPhone 14', 'iPhone 13 Pro Max', 'iPhone 13 Pro', 'iPhone 13', 'iPhone 13 mini', 'iPhone 12 Pro Max', 'iPhone 12 Pro', 'iPhone 12', 'iPhone 12 mini', 'iPhone SE (2022)', 'iPhone 11 Pro Max', 'iPhone 11 Pro', 'iPhone 11', 'iPhone XS Max', 'iPhone XS', 'iPhone XR', 'iPhone X', 'iPhone 8 Plus', 'iPhone 8', 'iPhone 7 Plus', 'iPhone 7', 'iPhone SE (2020)', 'iPhone 6s Plus', 'iPhone 6s', 'iPhone 6 Plus', 'iPhone 6', 'iPhone SE (1st gen)', 'Anders iPhone'],
+    'Samsung': ['Galaxy S24 Ultra', 'Galaxy S24+', 'Galaxy S24', 'Galaxy S23 Ultra', 'Galaxy S23+', 'Galaxy S23', 'Galaxy S23 FE', 'Galaxy S22 Ultra', 'Galaxy S22+', 'Galaxy S22', 'Galaxy S21 Ultra', 'Galaxy S21+', 'Galaxy S21', 'Galaxy S21 FE', 'Galaxy S20 Ultra', 'Galaxy S20+', 'Galaxy S20', 'Galaxy S20 FE', 'Galaxy Note 20 Ultra', 'Galaxy Note 20', 'Galaxy Note 10+', 'Galaxy Note 10', 'Galaxy S10+', 'Galaxy S10', 'Galaxy S10e', 'Galaxy S9+', 'Galaxy S9', 'Galaxy A75', 'Galaxy A55', 'Galaxy A54', 'Galaxy A53', 'Galaxy A52', 'Galaxy A34', 'Galaxy A33', 'Galaxy A25', 'Galaxy A24', 'Galaxy A23', 'Galaxy A22', 'Galaxy A15', 'Galaxy A14', 'Galaxy A13', 'Galaxy A12', 'Anders Samsung'],
+    'Google': ['Pixel 8 Pro', 'Pixel 8', 'Pixel 7a', 'Pixel 7 Pro', 'Pixel 7', 'Pixel 6a', 'Pixel 6 Pro', 'Pixel 6', 'Pixel 5a', 'Pixel 5', 'Pixel 4a', 'Pixel 4', 'Pixel 3a', 'Pixel 3', 'Anders Google'],
+    'OnePlus': ['OnePlus 12', 'OnePlus 11', 'OnePlus 10 Pro', 'OnePlus 10T', 'OnePlus 9 Pro', 'OnePlus 9', 'OnePlus 8T', 'OnePlus 8 Pro', 'OnePlus 8', 'OnePlus 7T Pro', 'OnePlus 7T', 'OnePlus 7 Pro', 'OnePlus 7', 'OnePlus 6T', 'OnePlus 6', 'OnePlus Nord 3', 'OnePlus Nord 2T', 'OnePlus Nord 2', 'OnePlus Nord', 'OnePlus Nord CE 3', 'OnePlus Nord CE 2', 'OnePlus Nord CE', 'Anders OnePlus'],
+    'Huawei': ['P60 Pro', 'P60', 'P50 Pro', 'P50', 'P40 Pro', 'P40', 'P30 Pro', 'P30', 'Mate 60 Pro', 'Mate 50 Pro', 'Mate 40 Pro', 'Nova 11', 'Nova 10', 'Nova 9', 'Y70', 'Y60', 'Anders Huawei'],
+    'Xiaomi': ['14 Ultra', '14', '13T Pro', '13T', '13 Pro', '13', '12T Pro', '12T', '12 Pro', '12', '11T Pro', '11T', '11', 'Redmi Note 13 Pro', 'Redmi Note 13', 'Redmi Note 12 Pro', 'Redmi Note 12', 'Redmi 12', 'POCO X5 Pro', 'POCO X5', 'POCO F5', 'Anders Xiaomi']
+};
+
+function laadVerkoopMerken() {
+  const merkSelect = document.getElementById('verkoopMerk');
+  
+  merkSelect.addEventListener('change', function() {
+    const selectedMerk = this.value;
+    const modelSelect = document.getElementById('verkoopModel');
+    
+    modelSelect.innerHTML = '<option value="">Selecteer model</option>';
+    
+    if (selectedMerk && telefoonModellenAdmin[selectedMerk]) {
+      telefoonModellenAdmin[selectedMerk].forEach(model => {
+        const option = document.createElement('option');
+        option.value = model;
+        option.textContent = model;
+        modelSelect.appendChild(option);
+      });
+    }
+  });
+}
+
+async function laadVerkoopPrijzen() {
+  if (!isAdminLoggedIn) return;
+
+  try {
+    const response = await fetch('/api/verkoop-prijzen');
+    const prijzen = await response.json();
+
+    let html = '';
+    if (Object.keys(prijzen).length === 0) {
+      html = '<p>Geen prijzen ingesteld</p>';
+    } else {
+      html = '<div class="prijzen-grid">';
+      Object.entries(prijzen).forEach(([key, data]) => {
+        const [merk, model] = key.split('-');
+        html += `
+          <div class="prijs-item">
+            <div class="prijs-info">
+              <strong>${merk} ${model}</strong><br>
+              <span class="prijs">€${data.prijs}</span>
+            </div>
+            <button class="btn btn-danger btn-small" onclick="verwijderVerkoopPrijs('${key}')">Verwijder</button>
+          </div>
+        `;
+      });
+      html += '</div>';
+    }
+
+    document.getElementById('verkoopPrijzenLijst').innerHTML = html;
+
+  } catch (error) {
+    document.getElementById('verkoopPrijzenLijst').innerHTML = '<p style="color: red;">Fout bij laden van prijzen</p>';
+  }
+}
+
+async function slaVerkoopPrijsOp() {
+  if (!isAdminLoggedIn) return;
+
+  const merk = document.getElementById('verkoopMerk').value;
+  const model = document.getElementById('verkoopModel').value;
+  const prijs = parseFloat(document.getElementById('verkoopPrijs').value);
+
+  if (!merk || !model || !prijs || prijs < 0) {
+    alert('Vul alle velden correct in');
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/verkoop-prijzen', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        merk,
+        model,
+        prijs
+      })
+    });
+
+    if (response.ok) {
+      alert('Prijs opgeslagen!');
+      document.getElementById('verkoopMerk').value = '';
+      document.getElementById('verkoopModel').innerHTML = '<option value="">Selecteer eerst merk</option>';
+      document.getElementById('verkoopPrijs').value = '';
+      laadVerkoopPrijzen();
+    } else {
+      alert('Fout bij opslaan van prijs');
+    }
+  } catch (error) {
+    alert('Fout bij opslaan van prijs');
+  }
+}
+
+async function verwijderVerkoopPrijs(key) {
+  if (!isAdminLoggedIn) return;
+
+  if (confirm('Weet je zeker dat je deze prijs wilt verwijderen?')) {
+    try {
+      const response = await fetch(`/api/verkoop-prijzen/${key}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        laadVerkoopPrijzen();
+      } else {
+        alert('Fout bij verwijderen van prijs');
+      }
+    } catch (error) {
+      alert('Fout bij verwijderen van prijs');
+    }
   }
 }
 

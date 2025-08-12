@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - IM-Mobile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>IM-MOBILE</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">Over ons</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="verkoop.html">Verkoop</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="contact-hero">
+                <h1>Neem Contact Met Ons Op</h1>
+                <p>We helpen je graag verder met al je mobiele behoeften</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>📞 Bel Ons</h3>
+                        <p><a href="tel:+310523255001">+31 0523 255 001</a></p>
+                        <p>Ma-Vr: 08:00 - 17:00</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>✉️ Email</h3>
+                        <p><a href="mailto:info@im-mobile.nl">info@im-mobile.nl</a></p>
+                        <p>We reageren binnen 24 uur</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>📍 Bezoek Ons</h3>
+                        <p>Oosteinde 5A<br>7772 CA Hardenberg</p>
+                        <a href="https://www.google.com/maps/place/Telefoonwinkel+Hardenberg+IM-Mobile+telefoon+reparatie/@52.5755042,6.6196178,209m/data=!3m1!1e3!4m6!3m5!1s0x47c801c7200c5a03:0x91ebab6ee9c0574b!8m2!3d52.5755537!4d6.6201239!16s%2Fg%2F11bxj9nxvm?entry=ttu&g_ep=EgoyMDI1MDcyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank">Bekijk op kaart</a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Stuur Een Bericht</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="naam">Naam *</label>
+                            <input type="text" id="naam" name="naam" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefoon">Telefoon</label>
+                            <input type="tel" id="telefoon" name="telefoon">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="onderwerp">Onderwerp *</label>
+                            <select id="onderwerp" name="onderwerp" required>
+                                <option value="">Selecteer onderwerp</option>
+                                <option value="reparatie">Reparatie vraag</option>
+                                <option value="verkoop">Verkoop vraag</option>
+                                <option value="algemeen">Algemene vraag</option>
+                                <option value="klacht">Klacht</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bericht">Bericht *</label>
+                            <textarea id="bericht" name="bericht" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Verstuur Bericht</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="opening-hours">
+                <h3>Openingstijden</h3>
+                <div class="hours-grid">
+                    <div class="day">Maandag: <span>08:00 - 17:00</span></div>
+                    <div class="day">Dinsdag: <span>08:00 - 17:00</span></div>
+                    <div class="day">Woensdag: <span>08:00 - 17:00</span></div>
+                    <div class="day">Donderdag: <span>08:00 - 17:00</span></div>
+                    <div class="day">Vrijdag: <span>08:00 - 17:00</span></div>
+                    <div class="day">Zaterdag: <span>10:00 - 17:00</span></div>
+                    <div class="day">Zondag: <span>Gesloten</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
+    </footer>
+</body>
+</html>

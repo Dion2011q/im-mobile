@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verkoop - IM-Mobile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/verkoop.css">
+    <script src="js/script.js" defer></script>
+    <script src="js/verkoop.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>IM-MOBILE</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">Over ons</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="verkoop.html" class="active">Verkoop</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="verkoop-hero">
+                <h1>Verkoop Uw Telefoon</h1>
+                <p>Krijg direct een schatting van de waarde van uw toestel</p>
+            </div>
+
+            <div class="price-estimator">
+                <div class="estimator-card">
+                    <h2>📱 Prijsschatting Tool</h2>
+                    <p>Vul de gegevens van uw telefoon in voor een indicatieve prijs</p>
+                    
+                    <form id="priceEstimatorForm">
+                        <div class="form-group">
+                            <label for="telefoonMerk">Merk *</label>
+                            <select id="telefoonMerk" name="telefoonMerk" required>
+                                <option value="">Selecteer merk</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefoonModel">Model *</label>
+                            <select id="telefoonModel" name="telefoonModel" required>
+                                <option value="">Selecteer eerst een merk</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conditie">Conditie *</label>
+                            <select id="conditie" name="conditie" required>
+                                <option value="">Selecteer conditie</option>
+                                <option value="als-nieuw">Als nieuw</option>
+                                <option value="zeer-goed">Zeer goed</option>
+                                <option value="goed">Goed</option>
+                                <option value="redelijk">Redelijk</option>
+                                <option value="slecht">Slecht</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="opslagcapaciteit">Opslagcapaciteit</label>
+                            <select id="opslagcapaciteit" name="opslagcapaciteit">
+                                <option value="">Onbekend</option>
+                                <option value="32GB">32GB</option>
+                                <option value="64GB">64GB</option>
+                                <option value="128GB">128GB</option>
+                                <option value="256GB">256GB</option>
+                                <option value="512GB">512GB</option>
+                                <option value="1TB">1TB</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Bereken Schatting</button>
+                    </form>
+
+                    <div id="priceResult" class="price-result" style="display: none;">
+                        <h3>💰 Geschatte Prijs</h3>
+                        <div class="estimated-price">
+                            <span id="estimatedPrice">€0</span>
+                        </div>
+                        <p class="price-note">
+                            Dit is een indicatieve prijs. De werkelijke prijs kan afwijken na inspectie in de winkel.
+                        </p>
+                        <div class="next-steps">
+                            <h4>Volgende Stappen:</h4>
+                            <ol>
+                                <li>Breng uw telefoon naar onze winkel</li>
+                                <li>Wij inspecteren het toestel grondig</li>
+                                <li>U krijgt direct een definitieve prijs</li>
+                                <li>Akkoord? Dan betalen we direct uit!</li>
+                            </ol>
+                            <div class="cta-buttons">
+                                <a href="contact.html" class="btn btn-primary">Kom Langs</a>
+                                <a href="tel:+310523255001" class="btn btn-secondary">Bel Ons</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verkoop-info">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🔍 Grondige Inspectie</h3>
+                        <p>Wij controleren alle functies van uw telefoon om de juiste prijs te bepalen</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>💸 Directe Uitbetaling</h3>
+                        <p>Akkoord met onze prijs? Dan betalen we direct contant of via pin</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>🏪 Bezoek Onze Winkel</h3>
+                        <p>Kom langs in Hardenberg voor een persoonlijke beoordeling</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verkoop-voorwaarden">
+                <h2>Wat Hebben We Nodig?</h2>
+                <div class="requirements">
+                    <ul>
+                        <li>✅ Geldig identiteitsbewijs</li>
+                        <li>✅ Originele lader (indien beschikbaar)</li>
+                        <li>✅ Telefoon moet uitgeschakeld zijn</li>
+                        <li>✅ iCloud/Google account moet afgekoppeld zijn</li>
+                        <li>✅ Factory reset uitgevoerd</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="contact-verkoop">
+                <h2>Vragen Over Verkoop?</h2>
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <h4>📍 Bezoek Ons</h4>
+                        <p>Oosteinde 5A, 7772 CA Hardenberg</p>
+                        <p>Ma-Vr: 08:00 - 17:00</p>
+                    </div>
+                    <div class="contact-option">
+                        <h4>📞 Bel Ons</h4>
+                        <p><a href="tel:+310523255001">+31 0523 255 001</a></p>
+                        <p>Voor vragen en afspraken</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
+    </footer>
+</body>
+</html>

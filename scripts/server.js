@@ -17,6 +17,7 @@ const USERS_FILE = 'data/users.json';
 const SETTINGS_FILE = 'data/instellingen.json';
 const PAUZES_FILE = 'data/pauzes.json';
 const OFFERTES_FILE = 'data/offertes.json'; // Added for quotations
+const VERKOOP_PRIJZEN_FILE = 'data/verkoopPrijzen.json'; // Added for sales prices
 let reparaties = [];
 let nextId = 1;
 let users = [];
@@ -39,6 +40,7 @@ let instellingen = {
   }
 };
 let offertes = []; // Added for quotations
+let verkoopPrijzen = {}; // Added for sales prices
 
 // Create data directory if it doesn't exist
 if (!fs.existsSync('data')) {
@@ -171,12 +173,36 @@ function writeOffertes(offertesData) {
   fs.writeFileSync(OFFERTES_FILE, JSON.stringify(offertesData, null, 2));
 }
 
+// Sales price file management
+function laadVerkoopPrijzen() {
+  try {
+    if (fs.existsSync(VERKOOP_PRIJZEN_FILE)) {
+      const data = fs.readFileSync(VERKOOP_PRIJZEN_FILE, 'utf8');
+      verkoopPrijzen = JSON.parse(data);
+    } else {
+      verkoopPrijzen = {};
+    }
+  } catch (error) {
+    console.error('Fout bij laden van verkoopprijzen:', error);
+    verkoopPrijzen = {};
+  }
+}
+
+function slaVerkoopPrijzenOp() {
+  try {
+    fs.writeFileSync(VERKOOP_PRIJZEN_FILE, JSON.stringify(verkoopPrijzen, null, 2));
+  } catch (error) {
+    console.error('Fout bij opslaan van verkoopprijzen:', error);
+  }
+}
+
 
 // Load data on server start
 laadReparaties();
 laadUsers();
 laadInstellingen();
 laadPauzes();
+laadVerkoopPrijzen(); // Load sales prices on server start
 // Load quotations on server start (optional, if you want to persist quotations)
 // if (fs.existsSync(OFFERTES_FILE)) {
 //   offertes = readOffertes();
@@ -466,7 +492,7 @@ app.post('/api/reparaties/:id/offerte', (req, res) => {
 // API endpoint: Get quotations for user's repairs
 app.get('/api/reparaties/user/:userId/offertes', (req, res) => {
   const userId = parseInt(req.params.userId);
-  
+
   const userReparaties = reparaties
     .filter(r => r.userId === userId && r.heeftOfferte)
     .sort((a, b) => {
@@ -481,7 +507,7 @@ app.get('/api/reparaties/user/:userId/offertes', (req, res) => {
 // API endpoint: Accept quotation for repair
 app.put('/api/reparaties/:id/offerte/accept', (req, res) => {
   const reparatieId = parseInt(req.params.id);
-  
+
   const reparatie = reparaties.find(r => r.id === reparatieId);
   if (!reparatie) {
     return res.status(404).json({ error: 'Reparatie niet gevonden' });
@@ -505,7 +531,7 @@ app.put('/api/reparaties/:id/offerte/accept', (req, res) => {
 // API endpoint: Reject quotation for repair
 app.put('/api/reparaties/:id/offerte/reject', (req, res) => {
   const reparatieId = parseInt(req.params.id);
-  
+
   const reparatie = reparaties.find(r => r.id === reparatieId);
   if (!reparatie) {
     return res.status(404).json({ error: 'Reparatie niet gevonden' });
@@ -524,6 +550,64 @@ app.put('/api/reparaties/:id/offerte/reject', (req, res) => {
 
   slaReparatiesOp();
   res.json({ success: true, message: 'Offerte afgewezen' });
+});
+
+// Sales price management API endpoints
+app.get('/api/verkoop-prijzen', (req, res) => {
+  res.json(verkoopPrijzen);
+});
+
+app.post('/api/verkoop-prijzen', (req, res) => {
+  const { merk, model, prijs } = req.body;
+
+  if (!merk || !model || !prijs) {
+    return res.status(400).json({ error: 'Alle velden zijn verplicht' });
+  }
+
+  if (prijs < 0) {
+    return res.status(400).json({ error: 'Prijs moet positief zijn' });
+  }
+
+  const key = `${merk}-${model}`;
+  verkoopPrijzen[key] = {
+    merk,
+    model,
+    prijs: parseFloat(prijs),
+    laatstGewijzigd: new Date().toISOString()
+  };
+
+  slaVerkoopPrijzenOp();
+  res.json({ success: true, message: 'Prijs opgeslagen' });
+});
+
+app.delete('/api/verkoop-prijzen/:key', (req, res) => {
+  const key = req.params.key;
+
+  if (!verkoopPrijzen[key]) {
+    return res.status(404).json({ error: 'Prijs niet gevonden' });
+  }
+
+  delete verkoopPrijzen[key];
+  slaVerkoopPrijzenOp();
+  res.json({ success: true, message: 'Prijs verwijderd' });
+});
+
+// API endpoint to get estimated price for a given model
+app.get('/api/schat-prijs', (req, res) => {
+  const { merk, model } = req.query;
+
+  if (!merk || !model) {
+    return res.status(400).json({ error: 'Merk en model zijn verplicht' });
+  }
+
+  const key = `${merk}-${model}`;
+  const prijsInfo = verkoopPrijzen[key];
+
+  if (!prijsInfo) {
+    return res.status(404).json({ error: 'Prijs voor dit model niet gevonden' });
+  }
+
+  res.json({ merk: prijsInfo.merk, model: prijsInfo.model, geschattePrijs: prijsInfo.prijs });
 });
 
 

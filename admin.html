@@ -179,6 +179,47 @@
           </div>
         </section>
 
+        <section class="sales-prices-section">
+          <h2>Verkoop Prijzen Beheer</h2>
+          <div class="verkoop-prijzen-beheer">
+            <div class="prijs-form">
+              <h3>Nieuwe Prijs Toevoegen/Wijzigen</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="verkoopMerk">Merk:</label>
+                  <select id="verkoopMerk">
+                    <option value="">Selecteer merk</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Google">Google</option>
+                    <option value="OnePlus">OnePlus</option>
+                    <option value="Huawei">Huawei</option>
+                    <option value="Xiaomi">Xiaomi</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="verkoopModel">Model:</label>
+                  <select id="verkoopModel">
+                    <option value="">Selecteer eerst merk</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="verkoopPrijs">Basis Prijs (€):</label>
+                  <input type="number" id="verkoopPrijs" step="5" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" onclick="slaVerkoopPrijsOp()">Prijs Opslaan</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="huidige-prijzen">
+              <h3>Huidige Prijzen</h3>
+              <div id="verkoopPrijzenLijst" class="verkoop-prijzen-lijst"></div>
+            </div>
+          </div>
+        </section>
+
         <section class="repairs-section">
           <div class="section-header">
             <h2>Geplande Reparaties</h2>

@@ -354,10 +354,4 @@ function showMessage(message, type) {
   }, 5000);
 }
 
-function showAccountSection() {
-  document.getElementById('loginSection').style.display = 'none';
-  document.getElementById('accountSection').style.display = 'block';
-  document.getElementById('welcomeUser').textContent = currentUser.username;
-  laadMijnOffertes();
-  laadMijnReparaties();
-}
+// Function is already defined above, removing duplicate
