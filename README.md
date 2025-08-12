@@ -33,6 +33,9 @@ Deze website is gebouwd met de volgende standaard webtechnologieën:
 
 ## Gebruik
 
-Open simpelweg het `index.html` bestand in je webbrowser om de website te bekijken.
+1. Zorg dat je nodejs hebt geinstalleerd.
+2. npm install
+3. node scripts/server.js
+4. Ga naar http://0.0.0.0:5001/
 
 ---
