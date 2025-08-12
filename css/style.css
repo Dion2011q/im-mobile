@@ -1,12 +1,11 @@
-/* Algemene styling */
 :root {
-    --primary-color: #007bff; /* Een mooie blauwe kleur voor accenten */
-    --secondary-color: #f8f9fa; /* Lichte achtergrondkleur voor secties */
-    --text-color: #1c2024; /* Donkere tekstkleur */
-    --light-text-color: #e7e7e7; /* Lichtere tekstkleur voor minder belangrijke teksten */
-    --heading-color: #3f4449; /* Kleur voor koppen */
-    --white: #ffffff; /* Witte kleur */
-    --border-color: #dee2e6; /* Kleur voor randen */
+    --primary-color: #007bff;
+    --secondary-color: #f8f9fa;
+    --text-color: #1c2024;
+    --light-text-color: #e7e7e7;
+    --heading-color: #3f4449;
+    --white: #ffffff;
+    --border-color: #dee2e6;
 }
 
 html, body {
@@ -24,9 +23,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.8em;
 }
 
-p {
-    margin-bottom: 1em;
-}
+p { margin-bottom: 1em; }
 
 a {
     color: var(--primary-color);
@@ -42,22 +39,24 @@ ul {
 
 /* Header styling */
 header {
-    background-color: var(--heading-color);
+    background-color: rgba(0, 67, 106, 0.9);
+    backdrop-filter: blur(4px); /* achtergrond blur header */
+    -webkit-backdrop-filter: blur(4px); /* voor safari blur */
     color: var(--white);
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 12px 24px;
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-    position: relative;
-    top: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,1);
+    position: fixed;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
     z-index: 1000;
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 60px;
-    vertical-align: middle;
+    border-radius: 9999999px;
+    margin: 0;
 }
 
 header h1 {
@@ -73,8 +72,7 @@ header nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    justify-self: center;
-    flex-wrap: wrap; /* Voor kleinere schermen */
+    flex-wrap: wrap;
     vertical-align: middle;
 }
 
@@ -83,18 +81,17 @@ header nav ul li a {
     font-weight: normal;
     padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.3s;
     vertical-align: middle;
 }
 
-header nav ul li a:hover, header nav ul li a.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    text-decoration: none;
-    font-weight: bold;
+header nav ul li a:hover,
+header nav ul li a.active {
+    background-color: rgba(255,255,255,0.1);
+    text-decoration: underline;
 }
 
 /* Main content styling */
-
 main {
     padding: 0;
     margin: 0;
@@ -104,8 +101,8 @@ main {
 section {
     background-color: var(--secondary-color);
     margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
 }
 
 section h2 {
@@ -114,54 +111,4 @@ section h2 {
     color: var(--primary-color);
     font-size: 2em;
     position: relative;
-}
-
-
-/* Telefoon selectie dropdowns */
-.telefoon-selectie {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.dropdown-group {
-  flex: 1;
-  min-width: 200px;
-}
-
-.dropdown-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-
-.dropdown-group select {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-}
-
-.dropdown-group select:disabled {
-  background-color: #f5f5f5;
-  color: #999;
-  cursor: not-allowed;
-}
-
-.dropdown-group select:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-@media (max-width: 600px) {
-  .telefoon-selectie {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .dropdown-group {
-    min-width: 100%;
-  }
 }

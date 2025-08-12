@@ -43,7 +43,19 @@
       "userId": 7,
       "username": "test",
       "aangemaakt": "2025-08-07T14:24:23.739Z"
+    },
+    {
+      "id": 26,
+      "klantNaam": "diontest",
+      "beschrijving": "Telefoon: Apple iPhone 14 Pro | Probleem: Camera werkt niet | Extra opmerkingen: 111",
+      "datum": "2026-11-11",
+      "tijd": "09:00",
+      "eindTijd": "09:15",
+      "status": "Gepland",
+      "userId": 9,
+      "username": "dion",
+      "aangemaakt": "2025-08-12T13:49:42.255Z"
     }
   ],
-  "nextId": 26
+  "nextId": 27
 }

@@ -55,7 +55,14 @@
       "email": "KANKER@gmIL.COM",
       "password": "geheim",
       "aangemaakt": "2025-08-07T15:28:00.881Z"
+    },
+    {
+      "id": 9,
+      "username": "dion",
+      "email": "dion.p.dogger@protonmail.com",
+      "password": "12345678",
+      "aangemaakt": "2025-08-12T13:46:19.296Z"
     }
   ],
-  "nextUserId": 9
+  "nextUserId": 10
 }
