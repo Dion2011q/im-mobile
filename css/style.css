@@ -110,6 +110,9 @@ a:hover {
     border-bottom: 1px solid var(--border-color);
     padding: 12px 20px;
     font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .top-bar-content {
@@ -192,6 +195,7 @@ nav a.repair-btn {
     color: var(--white);
     font-weight: 600;
     padding: 12px 24px;
+    word-break: none;
 }
 
 nav a.repair-btn:hover {
@@ -588,6 +592,11 @@ footer {
     text-align: center;
     padding: 32px 20px;
     font-size: 0.875rem;
+}
+
+#algemene-voorwaarden-link {
+    color: white;
+    text-decoration: underline;
 }
 
 /* Responsive design */

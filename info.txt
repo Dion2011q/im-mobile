@@ -1,5 +1,0 @@
-kleuren:
-
-main: 
-seconderary: 
-text: 
