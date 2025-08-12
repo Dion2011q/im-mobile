@@ -54,7 +54,13 @@
       "status": "Gepland",
       "userId": 9,
       "username": "dion",
-      "aangemaakt": "2025-08-12T13:49:42.255Z"
+      "aangemaakt": "2025-08-12T13:49:42.255Z",
+      "heeftOfferte": true,
+      "offerteProbleem": "hele telefoon kaput",
+      "offerteWerkzaamheden": "alles",
+      "offertePrijs": 1000000,
+      "offerteStatus": "Pending",
+      "offerteAangemaakt": "2025-08-12T13:55:25.282Z"
     }
   ],
   "nextId": 27
