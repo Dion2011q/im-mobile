@@ -163,6 +163,10 @@
     transform: translateY(-5px);
 }
 
+#about {
+    border-bottom: 1px solid var(--border-color);
+}
+
 #about p {
     text-align: center;
     font-size: 1.1em;
@@ -180,6 +184,7 @@
     text-align: center;
     padding: 40px 20px;
     background-color: #f8f9fa;
+    border-bottom: 1px solid var(--border-color);
 }
 
 #reviews h2 {
@@ -264,6 +269,10 @@
     display: inline-block;
 }
 
+#contact {
+    border-bottom: 1px solid var(--border-color);
+}
+
 #contact p {
     text-align: center;
     margin-bottom: 0.5em;
@@ -282,6 +291,7 @@
 #team {
     text-align: center;
     padding: 40px 20px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 #team h2 {
@@ -401,7 +411,7 @@ footer {
         text-align: center;
     }
 
-    .contact-info span {
+    .contact-info span { /* dit is van de top bar */
         margin-right: 10px;
         display: block;
         margin-bottom: 5px;

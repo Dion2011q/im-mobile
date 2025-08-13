@@ -123,19 +123,19 @@ a:hover {
     align-items: center;
 }
 
-.contact-info {
+.contact-info { /* dit is van de top bar */
     display: flex;
     gap: 24px;
 }
 
-.contact-info span {
+.contact-info span { /* dit is van de top bar */
     color: var(--light-text-color);
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.rating {
+.rating { /* dit is van de top bar */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -221,10 +221,8 @@ section {
 
 /* Hero section */
 #hero {
-    background: linear-gradient(135deg, var(--surface-color) 0%, var(--background-color) 100%);
     position: relative;
     overflow: hidden;
-    padding: 120px 20px;
     text-align: center;
 }
 
@@ -235,7 +233,6 @@ section {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     opacity: 0.5;
 }
 
@@ -257,7 +254,7 @@ section {
     font-size: 3.5rem;
     font-weight: 800;
     margin-bottom: 24px;
-    background: linear-gradient(135deg, var(--heading-color), var(--primary-color));
+    background: linear-gradient(30deg,rgba(94, 167, 255, 1) 19%, rgba(2, 101, 222, 1) 84%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -338,7 +335,6 @@ section {
 
 /* Guarantee section */
 #guarantee {
-    background: var(--surface-color);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
@@ -365,6 +361,7 @@ section {
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--border-color);
     transition: var(--transition);
+    background: #E6E6E6;
 }
 
 .guarantee-item:hover {
@@ -441,6 +438,8 @@ section {
     color: var(--primary-color);
     font-weight: 600;
 }
+
+
 
 /* Professional repair styling */
 .repair-container {
@@ -586,12 +585,16 @@ section {
 
 /* Footer */
 footer {
-    background-color: var(--surface-color);
+    background: linear-gradient(30deg,rgba(94, 167, 255, 1) 19%, rgba(2, 101, 222, 1) 84%);
     border-top: 1px solid var(--border-color);
     color: var(--light-text-color);
     text-align: center;
     padding: 32px 20px;
     font-size: 0.875rem;
+}
+
+footer p {
+    color: white;
 }
 
 #algemene-voorwaarden-link {
@@ -607,9 +610,13 @@ footer {
         text-align: center;
     }
     
-    .contact-info {
+    .contact-info { /* dit is van de top bar */
         flex-direction: column;
         gap: 8px;
+    }
+
+    header {
+        position: relative;
     }
     
     .header-content {
