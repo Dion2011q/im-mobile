@@ -1,4 +1,17 @@
 {
-  "reparaties": [],
-  "nextId": 29
+  "reparaties": [
+    {
+      "id": 29,
+      "klantNaam": "dion",
+      "beschrijving": "Telefoon: OnePlus OnePlus 9 Pro | Probleem: Kapot scherm | Extra opmerkingen: test",
+      "datum": "2025-08-15",
+      "tijd": "09:00",
+      "eindTijd": "09:15",
+      "status": "Gepland",
+      "userId": 9,
+      "username": "dion",
+      "aangemaakt": "2025-08-14T15:56:50.611Z"
+    }
+  ],
+  "nextId": 30
 }
