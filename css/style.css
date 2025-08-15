@@ -160,6 +160,7 @@ header {
     margin: 0 auto;
     padding: 16px 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -185,6 +186,8 @@ nav a {
     padding: 8px 12px;
     border-radius: var(--border-radius);
     transition: var(--transition);
+    word-break: normal;
+    white-space: nowrap;
 }
 
 nav a:hover {
@@ -197,7 +200,8 @@ nav a.repair-btn {
     color: var(--white);
     font-weight: 600;
     padding: 12px 24px;
-    word-break: none;
+    word-break: normal;
+    white-space: nowrap;
 }
 
 nav a.repair-btn:hover {
@@ -363,7 +367,7 @@ section {
     border-radius: var(--border-radius-lg);
     border: 1px solid var(--border-color);
     transition: var(--transition);
-    background: #E6E6E6;
+    background: var(--surface-color);
 }
 
 .guarantee-item:hover {

@@ -1,5 +1,5 @@
 #hero {
-    background-image: url('/img/hero.png');
+    background-image: url('/img/hero.webp');
     background-size: cover;
     background-position: center;
     position: relative;
@@ -278,6 +278,15 @@
     margin-bottom: 0.5em;
 }
 
+#contact .container, #social-media .container {
+    min-width: 90vw;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
 #contact p a {
     font-weight: bold;
     text-decoration: underline;
@@ -385,7 +394,7 @@
 .opening-hours h2 {
   text-align: center;
   margin-bottom: 2.2rem;
-  color: var(--primary-color);
+  color: var(--heading-color);
 }
 
 .hours-grid {
