@@ -1,23 +1,160 @@
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = 5001;
+
+// Encryption functionality - integrated directly into server.js
+const ENCRYPTION_KEY = 'my-32-character-ultra-secure-key!!'; // 32 characters
+const ALGORITHM = 'aes-256-cbc';
+
+function encrypt(text) {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipher(ALGORITHM, ENCRYPTION_KEY);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return iv.toString('hex') + ':' + encrypted;
+}
+
+function decrypt(encryptedData) {
+  const parts = encryptedData.split(':');
+  const iv = Buffer.from(parts.shift(), 'hex');
+  const encryptedText = parts.join(':');
+  const decipher = crypto.createDecipher(ALGORITHM, ENCRYPTION_KEY);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
+
+function loadEncryptedJson(filePath) {
+  const encryptedPath = filePath + '.enc';
+  
+  try {
+    // Check if .enc version exists and migrate it
+    if (fs.existsSync(encryptedPath)) {
+      const encryptedData = fs.readFileSync(encryptedPath, 'utf8');
+      const decryptedData = decrypt(encryptedData);
+      const parsedData = JSON.parse(decryptedData);
+      
+      // Save to original filename with encrypted content
+      const newEncryptedData = encrypt(decryptedData);
+      fs.writeFileSync(filePath, newEncryptedData, 'utf8');
+      
+      // Remove .enc version
+      fs.unlinkSync(encryptedPath);
+      
+      return parsedData;
+    }
+    
+    // Try to load from original file (encrypted content)
+    if (fs.existsSync(filePath)) {
+      try {
+        const encryptedData = fs.readFileSync(filePath, 'utf8');
+        const decryptedData = decrypt(encryptedData);
+        return JSON.parse(decryptedData);
+      } catch (decryptError) {
+        // If decryption fails, assume it's unencrypted and encrypt it
+        const data = fs.readFileSync(filePath, 'utf8');
+        const parsedData = JSON.parse(data);
+        
+        // Save encrypted version
+        const encryptedData = encrypt(data);
+        fs.writeFileSync(filePath, encryptedData, 'utf8');
+        
+        return parsedData;
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error loading encrypted JSON:', error);
+    return null;
+  }
+}
+
+function saveEncryptedJson(filePath, data) {
+  try {
+    const jsonData = JSON.stringify(data, null, 2);
+    const encryptedData = encrypt(jsonData);
+    fs.writeFileSync(filePath, encryptedData, 'utf8');
+    
+    return true;
+  } catch (error) {
+    console.error('Error saving encrypted JSON:', error);
+    return false;
+  }
+}
+
+function encryptJsonFile(filePath) {
+  try {
+    if (!fs.existsSync(filePath)) {
+      return false;
+    }
+    
+    const data = fs.readFileSync(filePath, 'utf8');
+    const parsedData = JSON.parse(data);
+    
+    // Encrypt and save to the same filename
+    const jsonData = JSON.stringify(parsedData, null, 2);
+    const encryptedData = encrypt(jsonData);
+    fs.writeFileSync(filePath, encryptedData, 'utf8');
+    
+    return true;
+  } catch (error) {
+    console.error('Error encrypting JSON file:', error);
+    return false;
+  }
+}
+
+// Migration functionality - integrated directly into server.js
+function migrateToEncrypted() {
+  console.log('Starting migration to encrypted JSON files...');
+
+  const filesToEncrypt = [
+    'data/afspraken.json',
+    'data/users.json',
+    'data/instellingen.json',
+    'data/pauzes.json',
+    'data/offertes.json',
+    'data/verkoopPrijzen.json'
+  ];
+
+  let encryptedCount = 0;
+
+  filesToEncrypt.forEach(file => {
+    if (fs.existsSync(file)) {
+      console.log(`Encrypting ${file}...`);
+      if (encryptJsonFile(file)) {
+        console.log(`✓ ${file} encrypted successfully`);
+        encryptedCount++;
+      } else {
+        console.log(`✗ Failed to encrypt ${file}`);
+      }
+    } else {
+      console.log(`- ${file} does not exist, skipping`);
+    }
+  });
+
+  console.log(`\nMigration complete! ${encryptedCount} files encrypted.`);
+  console.log('Files maintain their original names but now contain encrypted data.');
+}
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// JSON file storage
+// JSON file storage (encrypted)
 const DATA_FILE = 'data/afspraken.json';
 const USERS_FILE = 'data/users.json';
 const SETTINGS_FILE = 'data/instellingen.json';
 const PAUZES_FILE = 'data/pauzes.json';
-const OFFERTES_FILE = 'data/offertes.json'; // Added for quotations
-const VERKOOP_PRIJZEN_FILE = 'data/verkoopPrijzen.json'; // Added for sales prices
+const OFFERTES_FILE = 'data/offertes.json';
+const VERKOOP_PRIJZEN_FILE = 'data/verkoopPrijzen.json';
 let reparaties = [];
 let nextId = 1;
 let users = [];
@@ -39,20 +176,25 @@ let instellingen = {
     zondag: { start: '08:00', eind: '17:00', gesloten: true }
   }
 };
-let offertes = []; // Added for quotations
-let verkoopPrijzen = {}; // Added for sales prices
+let offertes = [];
+let verkoopPrijzen = {};
 
 // Create data directory if it doesn't exist
 if (!fs.existsSync('data')) {
   fs.mkdirSync('data');
 }
 
-// Load repair data from JSON file
+// Run migration on server start if needed
+const shouldMigrate = process.argv.includes('--migrate') || process.env.MIGRATE_TO_ENCRYPTED === 'true';
+if (shouldMigrate) {
+  migrateToEncrypted();
+}
+
+// Load repair data from encrypted JSON file
 function laadReparaties() {
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const data = fs.readFileSync(DATA_FILE, 'utf8');
-      const parsedData = JSON.parse(data);
+    const parsedData = loadEncryptedJson(DATA_FILE);
+    if (parsedData) {
       reparaties = parsedData.reparaties || [];
       nextId = parsedData.nextId || 1;
     }
@@ -63,25 +205,45 @@ function laadReparaties() {
   }
 }
 
-// Save repair data to JSON file
+// Save repair data to encrypted JSON file
 function slaReparatiesOp() {
   try {
     const data = {
       reparaties: reparaties,
       nextId: nextId
     };
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    saveEncryptedJson(DATA_FILE, data);
   } catch (error) {
     console.error('Fout bij opslaan van reparaties:', error);
   }
 }
 
-// Load users from JSON file
+// Load users from encrypted JSON file (keeping original filename)
 function laadUsers() {
   try {
+    // Check if encrypted .enc version exists and migrate it
+    if (fs.existsSync(USERS_FILE + '.enc')) {
+      const encryptedData = fs.readFileSync(USERS_FILE + '.enc', 'utf8');
+      const decryptedData = decrypt(encryptedData);
+      const parsedData = JSON.parse(decryptedData);
+      
+      // Save to original filename with encrypted content
+      const encryptedContent = encrypt(decryptedData);
+      fs.writeFileSync(USERS_FILE, encryptedContent, 'utf8');
+      
+      // Remove .enc version
+      fs.unlinkSync(USERS_FILE + '.enc');
+      
+      users = parsedData.users || [];
+      nextUserId = parsedData.nextUserId || 1;
+      return;
+    }
+    
+    // Load from original file (encrypted content)
     if (fs.existsSync(USERS_FILE)) {
-      const data = fs.readFileSync(USERS_FILE, 'utf8');
-      const parsedData = JSON.parse(data);
+      const encryptedData = fs.readFileSync(USERS_FILE, 'utf8');
+      const decryptedData = decrypt(encryptedData);
+      const parsedData = JSON.parse(decryptedData);
       users = parsedData.users || [];
       nextUserId = parsedData.nextUserId || 1;
     }
@@ -92,25 +254,26 @@ function laadUsers() {
   }
 }
 
-// Save users to JSON file
+// Save users to encrypted JSON file (keeping original filename)
 function slaUsersOp() {
   try {
     const data = {
       users: users,
       nextUserId: nextUserId
     };
-    fs.writeFileSync(USERS_FILE, JSON.stringify(data, null, 2));
+    const jsonData = JSON.stringify(data, null, 2);
+    const encryptedData = encrypt(jsonData);
+    fs.writeFileSync(USERS_FILE, encryptedData, 'utf8');
   } catch (error) {
     console.error('Fout bij opslaan van users:', error);
   }
 }
 
-// Load settings from JSON file
+// Load settings from encrypted JSON file
 function laadInstellingen() {
   try {
-    if (fs.existsSync(SETTINGS_FILE)) {
-      const data = fs.readFileSync(SETTINGS_FILE, 'utf8');
-      const geladen = JSON.parse(data);
+    const geladen = loadEncryptedJson(SETTINGS_FILE);
+    if (geladen) {
       instellingen = {
         ...instellingen,
         ...geladen
@@ -121,12 +284,11 @@ function laadInstellingen() {
   }
 }
 
-// Load breaks from JSON file
+// Load breaks from encrypted JSON file
 function laadPauzes() {
   try {
-    if (fs.existsSync(PAUZES_FILE)) {
-      const data = fs.readFileSync(PAUZES_FILE, 'utf8');
-      const parsedData = JSON.parse(data);
+    const parsedData = loadEncryptedJson(PAUZES_FILE);
+    if (parsedData) {
       pauzes = parsedData.pauzes || [];
       nextPauzeId = parsedData.nextPauzeId || 1;
     }
@@ -137,51 +299,47 @@ function laadPauzes() {
   }
 }
 
-// Save breaks to JSON file
+// Save breaks to encrypted JSON file
 function slaPauzesOp() {
   try {
     const data = {
       pauzes: pauzes,
       nextPauzeId: nextPauzeId
     };
-    fs.writeFileSync(PAUZES_FILE, JSON.stringify(data, null, 2));
+    saveEncryptedJson(PAUZES_FILE, data);
   } catch (error) {
     console.error('Fout bij opslaan van pauzes:', error);
   }
 }
 
-// Save settings to JSON file
+// Save settings to encrypted JSON file
 function slaInstellingenOp() {
   try {
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(instellingen, null, 2));
+    saveEncryptedJson(SETTINGS_FILE, instellingen);
   } catch (error) {
     console.error('Fout bij opslaan van instellingen:', error);
   }
 }
 
-// Quotation file management
+// Quotation file management (encrypted)
 function readOffertes() {
   try {
-    const data = fs.readFileSync(OFFERTES_FILE, 'utf8');
-    return JSON.parse(data);
+    const data = loadEncryptedJson(OFFERTES_FILE);
+    return data || [];
   } catch (error) {
     return [];
   }
 }
 
 function writeOffertes(offertesData) {
-  fs.writeFileSync(OFFERTES_FILE, JSON.stringify(offertesData, null, 2));
+  saveEncryptedJson(OFFERTES_FILE, offertesData);
 }
 
-// Sales price file management
+// Sales price file management (encrypted)
 function laadVerkoopPrijzen() {
   try {
-    if (fs.existsSync(VERKOOP_PRIJZEN_FILE)) {
-      const data = fs.readFileSync(VERKOOP_PRIJZEN_FILE, 'utf8');
-      verkoopPrijzen = JSON.parse(data);
-    } else {
-      verkoopPrijzen = {};
-    }
+    const data = loadEncryptedJson(VERKOOP_PRIJZEN_FILE);
+    verkoopPrijzen = data || {};
   } catch (error) {
     console.error('Fout bij laden van verkoopprijzen:', error);
     verkoopPrijzen = {};
@@ -190,24 +348,28 @@ function laadVerkoopPrijzen() {
 
 function slaVerkoopPrijzenOp() {
   try {
-    fs.writeFileSync(VERKOOP_PRIJZEN_FILE, JSON.stringify(verkoopPrijzen, null, 2));
+    saveEncryptedJson(VERKOOP_PRIJZEN_FILE, verkoopPrijzen);
   } catch (error) {
     console.error('Fout bij opslaan van verkoopprijzen:', error);
   }
 }
-
 
 // Load data on server start
 laadReparaties();
 laadUsers();
 laadInstellingen();
 laadPauzes();
-laadVerkoopPrijzen(); // Load sales prices on server start
-// Load quotations on server start (optional, if you want to persist quotations)
-// if (fs.existsSync(OFFERTES_FILE)) {
-//   offertes = readOffertes();
-// }
+laadVerkoopPrijzen();
 
+// API endpoint to manually trigger migration
+app.post('/api/migrate-encrypt', (req, res) => {
+  try {
+    migrateToEncrypted();
+    res.json({ success: true, message: 'Migration completed successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Migration failed: ' + error.message });
+  }
+});
 
 // User routes
 app.post('/api/register', (req, res) => {
@@ -459,7 +621,6 @@ app.delete('/api/pauzes/:id', (req, res) => {
 });
 
 // Repair-based quotation API endpoints
-// API endpoint: Create quotation for a repair
 app.post('/api/reparaties/:id/offerte', (req, res) => {
   const reparatieId = parseInt(req.params.id);
   const { probleem, werkzaamheden, prijs } = req.body;
@@ -477,7 +638,6 @@ app.post('/api/reparaties/:id/offerte', (req, res) => {
     return res.status(400).json({ error: 'Deze reparatie heeft al een offerte' });
   }
 
-  // Add quotation to repair
   reparatie.heeftOfferte = true;
   reparatie.offerteProbleem = probleem;
   reparatie.offerteWerkzaamheden = werkzaamheden;
@@ -489,7 +649,6 @@ app.post('/api/reparaties/:id/offerte', (req, res) => {
   res.json({ success: true, message: 'Offerte toegevoegd aan reparatie' });
 });
 
-// API endpoint: Get quotations for user's repairs
 app.get('/api/reparaties/user/:userId/offertes', (req, res) => {
   const userId = parseInt(req.params.userId);
 
@@ -504,7 +663,6 @@ app.get('/api/reparaties/user/:userId/offertes', (req, res) => {
   res.json(userReparaties);
 });
 
-// API endpoint: Accept quotation for repair
 app.put('/api/reparaties/:id/offerte/accept', (req, res) => {
   const reparatieId = parseInt(req.params.id);
 
@@ -528,7 +686,6 @@ app.put('/api/reparaties/:id/offerte/accept', (req, res) => {
   res.json({ success: true, message: 'Offerte geaccepteerd' });
 });
 
-// API endpoint: Reject quotation for repair
 app.put('/api/reparaties/:id/offerte/reject', (req, res) => {
   const reparatieId = parseInt(req.params.id);
 
@@ -592,7 +749,6 @@ app.delete('/api/verkoop-prijzen/:key', (req, res) => {
   res.json({ success: true, message: 'Prijs verwijderd' });
 });
 
-// API endpoint to get estimated price for a given model
 app.get('/api/schat-prijs', (req, res) => {
   const { merk, model } = req.query;
 
@@ -609,7 +765,6 @@ app.get('/api/schat-prijs', (req, res) => {
 
   res.json({ merk: prijsInfo.merk, model: prijsInfo.model, geschattePrijs: prijsInfo.prijs });
 });
-
 
 function getDagNaam(datum) {
   const dagen = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
@@ -664,4 +819,5 @@ function genereerTijdSlots(datum = null) {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server draait op poort ${PORT}`);
+  console.log('To migrate existing files to encrypted format, restart with --migrate flag or set MIGRATE_TO_ENCRYPTED=true');
 });
