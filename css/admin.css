@@ -305,6 +305,124 @@ body {
   transform: translateY(-1px);
 }
 
+/* Product Management Styles */
+.products-section {
+  background: var(--admin-surface);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--admin-shadow);
+  border: 1px solid var(--admin-border);
+}
+
+.products-section h2 {
+  color: var(--admin-text);
+  margin: 0 0 2rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.products-section h2::before {
+  content: '📦';
+  font-size: 1.25rem;
+}
+
+.producten-beheer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+.product-form {
+  background: var(--admin-background);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--admin-border);
+}
+
+.product-form h3 {
+  color: var(--admin-primary);
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.producten-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-item {
+  background: var(--admin-background);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  transition: all 0.2s ease-in-out;
+}
+
+.product-item:hover {
+  box-shadow: var(--admin-shadow);
+  transform: translateY(-2px);
+}
+
+.product-image {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-image img:hover {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--admin-text);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.product-price {
+  color: var(--admin-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+}
+
+.product-desc {
+  color: var(--admin-text-light);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0 0 1rem 0;
+}
+
+.product-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  min-height: 36px;);
+}
+
 .dag-tijd-item label {
   font-weight: 700;
   color: var(--admin-text);

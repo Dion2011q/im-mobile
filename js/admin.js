@@ -1,6 +1,5 @@
 let isAdminLoggedIn = false;
 
-
 document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -36,6 +35,7 @@ function showAdminPanel() {
   laadInstellingen();
   laadVerkoopMerken();
   laadVerkoopPrijzen();
+  laadProducten();
 }
 
 function adminLogout() {
@@ -79,17 +79,17 @@ async function laadReparaties() {
 
     reparaties.forEach(reparatie => {
       const statusClass = reparatie.status === 'Gereed' ? 'status-gereed' : 'status-gepland';
-      const offerteKnop = reparatie.status === 'Gepland' && !reparatie.heeftOfferte 
+      const offerteKnop = reparatie.status === 'Gepland' && !reparatie.heeftOfferte
         ? `<button class="btn btn-primary" onclick="toonOfferteModal(${reparatie.id}, '${reparatie.klantNaam}', '${reparatie.beschrijving.replace(/'/g, "\\'")}')">Offerte maken</button>`
         : reparatie.heeftOfferte ? '<span style="color: green; font-size: 12px;">✓ Offerte gemaakt</span>' : '';
-      
+
       // Offerte status display
       let offerteStatusDisplay = 'Geen offerte';
       if (reparatie.heeftOfferte) {
         const offerteStatus = reparatie.offerteStatus || 'Pending';
         let statusClass = 'status-pending';
         let statusText = offerteStatus;
-        
+
         if (offerteStatus === 'Geaccepteerd') {
           statusClass = 'status-geaccepteerd';
           statusText = '✓ Geaccepteerd';
@@ -99,15 +99,15 @@ async function laadReparaties() {
         } else {
           statusText = '⏳ Wacht op antwoord';
         }
-        
+
         offerteStatusDisplay = `<span class="status-badge ${statusClass}">${statusText}</span>`;
-        
+
         if (reparatie.offertePrijs) {
           offerteStatusDisplay += `<br><small>€${parseFloat(reparatie.offertePrijs).toFixed(2)}</small>`;
         }
       }
-      
-      const actieKnoppen = reparatie.status === 'Gepland' 
+
+      const actieKnoppen = reparatie.status === 'Gepland'
         ? `${offerteKnop}
            <button class="completed-btn" onclick="markeerAlsGereed(${reparatie.id})">Gereed</button>
            <button class="delete-btn" onclick="verwijderReparatie(${reparatie.id})">Verwijder</button>`
@@ -148,7 +148,7 @@ async function verwijderReparatie(id) {
       });
 
       if (response.ok) {
-        laadReparaties(); 
+        laadReparaties();
       } else {
         alert('Fout bij verwijderen');
       }
@@ -192,7 +192,6 @@ async function laadInstellingen() {
     const instellingen = await response.json();
 
     document.getElementById('afspraakDuur').value = instellingen.afspraakDuur || 15;
-
 
     const dagen = ['maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'];
     dagen.forEach(dag => {
@@ -257,7 +256,6 @@ async function slaInstellingenOp() {
     return;
   }
 
-
   const dagen = ['maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'];
   const dagTijden = {};
 
@@ -273,7 +271,6 @@ async function slaInstellingenOp() {
     afspraakDuur,
     dagTijden
   };
-
 
   if (nieuwAdminPassword && nieuwAdminPassword.trim() !== '') {
     requestBody.adminPassword = nieuwAdminPassword;
@@ -414,7 +411,7 @@ let huidigAfspraakId = null;
 
 function toonOfferteModal(afspraakId, klantNaam, beschrijving) {
   huidigAfspraakId = afspraakId;
-  
+
   const modal = document.createElement('div');
   modal.className = 'expanded-content';
   modal.innerHTML = `
@@ -425,22 +422,22 @@ function toonOfferteModal(afspraakId, klantNaam, beschrijving) {
         <p><strong>Afspraak ID:</strong> ${afspraakId}</p>
         <p><strong>Huidige beschrijving:</strong></p>
         <div style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 20px;">${beschrijving}</div>
-        
+
         <div class="form-group">
           <label><strong>Probleem beschrijving:</strong></label>
           <textarea id="offerteProbleem" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Beschrijf het probleem dat moet worden opgelost..."></textarea>
         </div>
-        
+
         <div class="form-group">
           <label><strong>Werkzaamheden:</strong></label>
           <textarea id="offerteWerkzaamheden" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="Beschrijf wat er gedaan moet worden..."></textarea>
         </div>
-        
+
         <div class="form-group">
           <label><strong>Prijs (€):</strong></label>
           <input type="number" id="offertePrijs" step="0.01" min="0" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" placeholder="0.00">
         </div>
-        
+
         <div style="text-align: center; margin-top: 20px;">
           <button class="btn btn-success" onclick="maakAfspraakOfferte()">Offerte Bevestigen</button>
           <button class="btn btn-secondary" onclick="this.closest('.expanded-content').remove()">Annuleren</button>
@@ -448,7 +445,7 @@ function toonOfferteModal(afspraakId, klantNaam, beschrijving) {
       </div>
     </div>
   `;
-  
+
   document.body.appendChild(modal);
 }
 
@@ -507,13 +504,13 @@ const telefoonModellenAdmin = {
 
 function laadVerkoopMerken() {
   const merkSelect = document.getElementById('verkoopMerk');
-  
+
   merkSelect.addEventListener('change', function() {
     const selectedMerk = this.value;
     const modelSelect = document.getElementById('verkoopModel');
-    
+
     modelSelect.innerHTML = '<option value="">Selecteer model</option>';
-    
+
     if (selectedMerk && telefoonModellenAdmin[selectedMerk]) {
       telefoonModellenAdmin[selectedMerk].forEach(model => {
         const option = document.createElement('option');
@@ -616,6 +613,132 @@ async function verwijderVerkoopPrijs(key) {
       alert('Fout bij verwijderen van prijs');
     }
   }
+}
+
+// Product management functions
+async function laadProducten() {
+  if (!isAdminLoggedIn) return;
+
+  try {
+    const response = await fetch('/api/producten');
+    const producten = await response.json();
+
+    const productenLijst = document.getElementById('productenLijst');
+    if (!productenLijst) return;
+
+    if (producten.length === 0) {
+      productenLijst.innerHTML = '<p>Geen producten gevonden</p>';
+      return;
+    }
+
+    let html = '<div class="producten-grid">';
+    producten.forEach(product => {
+      const hoofdFoto = product.fotos && product.fotos.length > 0 ? product.fotos[0] : '/img/logo.jpeg';
+      html += `
+        <div class="product-item">
+          <div class="product-image">
+            <img src="${hoofdFoto}" alt="${product.titel}" onerror="this.src='/img/logo.jpeg'">
+          </div>
+          <div class="product-info">
+            <h4>${product.titel}</h4>
+            <p class="product-price">€${parseFloat(product.prijs).toFixed(2)}</p>
+            <p class="product-description">${product.beschrijving}</p>
+            <button class="btn btn-danger" onclick="verwijderProduct(${product.id})">Verwijderen</button>
+          </div>
+        </div>
+      `;
+    });
+    html += '</div>';
+
+    productenLijst.innerHTML = html;
+
+  } catch (error) {
+    console.error('Error loading products:', error);
+    const productenLijst = document.getElementById('productenLijst');
+    if (productenLijst) {
+      productenLijst.innerHTML = '<p>Fout bij laden van producten</p>';
+    }
+  }
+}
+
+async function voegProductToe() {
+  if (!isAdminLoggedIn) return;
+
+  const titel = document.getElementById('productTitel');
+  const prijs = document.getElementById('productPrijs');
+  const beschrijving = document.getElementById('productBeschrijving');
+  const fotos = document.getElementById('productFotos');
+
+  if (!titel || !prijs || !beschrijving || !fotos) {
+    alert('Formulier elementen niet gevonden');
+    return;
+  }
+
+  if (!titel.value.trim() || !prijs.value || !beschrijving.value.trim()) {
+    alert('Vul alle velden in');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('titel', titel.value.trim());
+  formData.append('prijs', parseFloat(prijs.value));
+  formData.append('beschrijving', beschrijving.value.trim());
+
+  // Add photos
+  for (let i = 0; i < fotos.files.length; i++) {
+    formData.append('fotos', fotos.files[i]);
+  }
+
+  try {
+    const response = await fetch('/api/producten', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      alert('Product toegevoegd!');
+      // Reset form
+      titel.value = '';
+      prijs.value = '';
+      beschrijving.value = '';
+      fotos.value = '';
+
+      // Reload products
+      laadProducten();
+    } else {
+      const error = await response.json();
+      alert('Fout: ' + (error.error || 'Onbekende fout'));
+    }
+  } catch (error) {
+    console.error('Error adding product:', error);
+    alert('Fout bij toevoegen van product');
+  }
+}
+
+async function verwijderProduct(id) {
+  if (!isAdminLoggedIn) return;
+
+  if (confirm('Weet je zeker dat je dit product wilt verwijderen?')) {
+    try {
+      const response = await fetch(`/api/producten/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Product verwijderd!');
+        laadProducten();
+      } else {
+        alert('Fout bij verwijderen van product');
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      alert('Fout bij verwijderen van product');
+    }
+  }
+}
+
+function toonProductDetails(id) {
+  window.open(`product.html?id=${id}`, '_blank');
 }
 
 // Close expanded content when clicking outside or pressing ESC

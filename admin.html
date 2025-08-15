@@ -208,6 +208,46 @@
           </div>
         </section>
 
+        <section class="products-section">
+          <h2>Producten Beheer</h2>
+          <div class="producten-beheer">
+            <div class="product-form">
+              <h3>Nieuw Product Toevoegen</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="productTitel">Titel:</label>
+                  <input type="text" id="productTitel" placeholder="Bijv. iPhone 15 Pro Max - Gebruikt">
+                </div>
+                <div class="form-group">
+                  <label for="productPrijs">Prijs (€):</label>
+                  <input type="number" id="productPrijs" step="0.01" min="0" placeholder="0.00">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="productPrijs">Prijs (€):</label>
+                <input type="number" id="productPrijs" step="0.01" min="0" placeholder="0.00">
+              </div>
+              <div class="form-group">
+                <label for="productBeschrijving">Beschrijving:</label>
+                <textarea id="productBeschrijving" rows="4" placeholder="Beschrijf het product, staat, kenmerken, etc."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="productFotos">Foto's:</label>
+                <input type="file" id="productFotos" multiple accept="image/*">
+                <small>Je kunt meerdere foto's selecteren</small>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" onclick="voegProductToe()">Product Toevoegen</button>
+              </div>
+            </div>
+            
+            <div class="huidige-producten">
+              <h3>Huidige Producten</h3>
+              <div id="productenLijst" class="producten-lijst"></div>
+            </div>
+          </div>
+        </section>
+
         <section class="sales-prices-section">
           <h2>Verkoop Prijzen Beheer</h2>
           <div class="verkoop-prijzen-beheer">

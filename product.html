@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - IM-Mobile</title>
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/verkoop.css">
+    <script src="/js/product.js" defer></script>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="contact-info">
+            <a href="tel:+310523255001">📞 +31 0523 255 001</a>
+            <a href="mailto:info@im-mobile.nl">✉️ info@im-mobile.nl</a>
+            <a href="https://maps.app.goo.gl/xRvQuyTH49kNkJ2U8" target="_blank">📍 Hardenberg</a>
+            <div class="rating">
+                <span>⭐⭐⭐⭐⭐ 4.7</span>
+                <span>Sterren op Google</span>
+            </div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="header-content">
+            <h1>IM-MOBILE</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">Over ons</a></li>
+                    <li><a href="verkoop.html">Verkoop</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="account.html">Mijn Account</a></li>
+                    <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div id="productLoading" class="loading-message">
+                <h2>Product wordt geladen...</h2>
+                <p>Even geduld alstublieft.</p>
+            </div>
+
+            <div id="productNotFound" class="error-message" style="display: none;">
+                <h2>Product niet gevonden</h2>
+                <p>Het opgevraagde product kon niet worden gevonden.</p>
+                <a href="verkoop.html" class="btn">Terug naar verkoop</a>
+            </div>
+
+            <div id="productDetails" class="product-detail" style="display: none;">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="mainImage" src="" alt="">
+                    </div>
+                    <div class="thumbnail-gallery" id="thumbnailGallery">
+                        <!-- Thumbnails will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <h1 id="productTitle"></h1>
+                    <div class="product-price">
+                        <span id="productPrice"></span>
+                    </div>
+                    <div class="product-description">
+                        <h3>Beschrijving</h3>
+                        <p id="productDescription"></p>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="window.location.href='contact.html'">
+                            Contacteer ons voor dit product
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='verkoop.html'">
+                            Terug naar verkoop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
+        <p><a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
+    </footer>
+</body>
+</html>

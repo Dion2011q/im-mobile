@@ -1,12 +1,23 @@
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const multer = require('multer'); // Import multer
 
 const app = express();
 const PORT = 5001;
+
+// Multer configuration for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Ensure 'uploads' directory exists
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
 
 // Encryption functionality - integrated directly into server.js
 const ENCRYPTION_KEY = 'my-32-character-ultra-secure-key!!'; // 32 characters
@@ -32,24 +43,24 @@ function decrypt(encryptedData) {
 
 function loadEncryptedJson(filePath) {
   const encryptedPath = filePath + '.enc';
-  
+
   try {
     // Check if .enc version exists and migrate it
     if (fs.existsSync(encryptedPath)) {
       const encryptedData = fs.readFileSync(encryptedPath, 'utf8');
       const decryptedData = decrypt(encryptedData);
       const parsedData = JSON.parse(decryptedData);
-      
+
       // Save to original filename with encrypted content
       const newEncryptedData = encrypt(decryptedData);
       fs.writeFileSync(filePath, newEncryptedData, 'utf8');
-      
+
       // Remove .enc version
       fs.unlinkSync(encryptedPath);
-      
+
       return parsedData;
     }
-    
+
     // Try to load from original file (encrypted content)
     if (fs.existsSync(filePath)) {
       try {
@@ -60,15 +71,15 @@ function loadEncryptedJson(filePath) {
         // If decryption fails, assume it's unencrypted and encrypt it
         const data = fs.readFileSync(filePath, 'utf8');
         const parsedData = JSON.parse(data);
-        
+
         // Save encrypted version
         const encryptedData = encrypt(data);
         fs.writeFileSync(filePath, encryptedData, 'utf8');
-        
+
         return parsedData;
       }
     }
-    
+
     return null;
   } catch (error) {
     console.error('Error loading encrypted JSON:', error);
@@ -81,7 +92,7 @@ function saveEncryptedJson(filePath, data) {
     const jsonData = JSON.stringify(data, null, 2);
     const encryptedData = encrypt(jsonData);
     fs.writeFileSync(filePath, encryptedData, 'utf8');
-    
+
     return true;
   } catch (error) {
     console.error('Error saving encrypted JSON:', error);
@@ -94,15 +105,15 @@ function encryptJsonFile(filePath) {
     if (!fs.existsSync(filePath)) {
       return false;
     }
-    
+
     const data = fs.readFileSync(filePath, 'utf8');
     const parsedData = JSON.parse(data);
-    
+
     // Encrypt and save to the same filename
     const jsonData = JSON.stringify(parsedData, null, 2);
     const encryptedData = encrypt(jsonData);
     fs.writeFileSync(filePath, encryptedData, 'utf8');
-    
+
     return true;
   } catch (error) {
     console.error('Error encrypting JSON file:', error);
@@ -143,10 +154,35 @@ function migrateToEncrypted() {
   console.log('Files maintain their original names but now contain encrypted data.');
 }
 
+// Helper to check if a file is encrypted
+function isEncrypted(filePath) {
+  try {
+    const encryptedData = fs.readFileSync(filePath, 'utf8');
+    // Attempt decryption; if it fails, it's likely not encrypted or corrupted
+    decrypt(encryptedData);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Helper to read JSON file (handles encryption)
+function readJsonFile(filePath) {
+  const encryptedData = loadEncryptedJson(filePath);
+  return encryptedData;
+}
+
+// Helper to write JSON file (handles encryption)
+function writeJsonFile(filePath, data) {
+  return saveEncryptedJson(filePath, data);
+}
+
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
+app.use('/uploads', express.static('uploads')); // Serve uploaded files
 
 // JSON file storage (encrypted)
 const DATA_FILE = 'data/afspraken.json';
@@ -155,6 +191,8 @@ const SETTINGS_FILE = 'data/instellingen.json';
 const PAUZES_FILE = 'data/pauzes.json';
 const OFFERTES_FILE = 'data/offertes.json';
 const VERKOOP_PRIJZEN_FILE = 'data/verkoopPrijzen.json';
+const PRODUCTEN_FILE = 'data/producten.json'; // New file for products
+
 let reparaties = [];
 let nextId = 1;
 let users = [];
@@ -171,7 +209,7 @@ let instellingen = {
     dinsdag: { start: '08:00', eind: '17:00', gesloten: false },
     woensdag: { start: '08:00', eind: '17:00', gesloten: false },
     donderdag: { start: '08:00', eind: '17:00', gesloten: false },
-    vrijdag: { start: '08:00', eind: '17:00', gesloten: false },
+    vrijdag: { start: '08:00', end: '17:00', gesloten: false },
     zaterdag: { start: '08:00', eind: '17:00', gesloten: true },
     zondag: { start: '08:00', eind: '17:00', gesloten: true }
   }
@@ -179,9 +217,12 @@ let instellingen = {
 let offertes = [];
 let verkoopPrijzen = {};
 
-// Create data directory if it doesn't exist
+// Create data directory and uploads directory if they don't exist
 if (!fs.existsSync('data')) {
   fs.mkdirSync('data');
+}
+if (!fs.existsSync('uploads')) {
+  fs.mkdirSync('uploads');
 }
 
 // Run migration on server start if needed
@@ -226,19 +267,19 @@ function laadUsers() {
       const encryptedData = fs.readFileSync(USERS_FILE + '.enc', 'utf8');
       const decryptedData = decrypt(encryptedData);
       const parsedData = JSON.parse(decryptedData);
-      
+
       // Save to original filename with encrypted content
       const encryptedContent = encrypt(decryptedData);
       fs.writeFileSync(USERS_FILE, encryptedContent, 'utf8');
-      
+
       // Remove .enc version
       fs.unlinkSync(USERS_FILE + '.enc');
-      
+
       users = parsedData.users || [];
       nextUserId = parsedData.nextUserId || 1;
       return;
     }
-    
+
     // Load from original file (encrypted content)
     if (fs.existsSync(USERS_FILE)) {
       const encryptedData = fs.readFileSync(USERS_FILE, 'utf8');
@@ -817,7 +858,105 @@ function genereerTijdSlots(datum = null) {
   return tijden;
 }
 
+// Product endpoints
+app.get('/api/producten', (req, res) => {
+  try {
+    const producten = readJsonFile(PRODUCTEN_FILE) || [];
+    res.json(producten);
+  } catch (error) {
+    console.error('Error reading products:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.get('/api/producten/:id', (req, res) => {
+  try {
+    const producten = readJsonFile(PRODUCTEN_FILE) || [];
+    const product = producten.find(p => p.id == req.params.id);
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product niet gevonden' });
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error('Error reading product:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.post('/api/producten', upload.array('fotos', 10), (req, res) => {
+  try {
+    const { titel, beschrijving, prijs } = req.body;
+
+    if (!titel || !beschrijving || !prijs) {
+      return res.status(400).json({ error: 'Alle velden zijn verplicht' });
+    }
+
+    const producten = readJsonFile(PRODUCTEN_FILE) || [];
+    const newId = producten.length > 0 ? Math.max(...producten.map(p => p.id)) + 1 : 1;
+
+    // Process uploaded files
+    const fotos = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];
+
+    const newProduct = {
+      id: newId,
+      titel: titel.trim(),
+      beschrijving: beschrijving.trim(),
+      prijs: parseFloat(prijs),
+      fotos: fotos,
+      toegevoegdOp: new Date().toISOString()
+    };
+
+    producten.push(newProduct);
+    writeJsonFile(PRODUCTEN_FILE, producten);
+
+    res.status(201).json(newProduct);
+  } catch (error) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.delete('/api/producten/:id', (req, res) => {
+  try {
+    const producten = readJsonFile(PRODUCTEN_FILE) || [];
+    const productIndex = producten.findIndex(p => p.id == req.params.id);
+
+    if (productIndex === -1) {
+      return res.status(404).json({ error: 'Product niet gevonden' });
+    }
+
+    // Remove product files if they exist
+    const product = producten[productIndex];
+    if (product.fotos) {
+      product.fotos.forEach(foto => {
+        const filePath = path.join(__dirname, '..', foto);
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      });
+    }
+
+    producten.splice(productIndex, 1);
+    writeJsonFile(PRODUCTEN_FILE, producten);
+
+    res.json({ message: 'Product verwijderd' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server draait op poort ${PORT}`);
-  console.log('To migrate existing files to encrypted format, restart with --migrate flag or set MIGRATE_TO_ENCRYPTED=true');
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+
+  // Check if migration is needed
+  if (!isEncrypted(USERS_FILE)) {
+    console.log('\nDetected unencrypted files. Starting migration...');
+    migrateToEncrypted();
+  } else {
+    console.log('All files are encrypted and ready to use.');
+  }
 });

@@ -1,4 +1,3 @@
-
 // Phone models data - same as repair system
 const telefoonModellen = {
     'Apple': ['iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15 Plus', 'iPhone 15', 'iPhone 14 Pro Max', 'iPhone 14 Pro', 'iPhone 14 Plus', 'iPhone 14', 'iPhone 13 Pro Max', 'iPhone 13 Pro', 'iPhone 13', 'iPhone 13 mini', 'iPhone 12 Pro Max', 'iPhone 12 Pro', 'iPhone 12', 'iPhone 12 mini', 'iPhone SE (2022)', 'iPhone 11 Pro Max', 'iPhone 11 Pro', 'iPhone 11', 'iPhone XS Max', 'iPhone XS', 'iPhone XR', 'iPhone X', 'iPhone 8 Plus', 'iPhone 8', 'iPhone 7 Plus', 'iPhone 7', 'iPhone SE (2020)', 'iPhone 6s Plus', 'iPhone 6s', 'iPhone 6 Plus', 'iPhone 6', 'iPhone SE (1st gen)', 'Anders iPhone'],
@@ -24,11 +23,12 @@ let verkoopPrijzen = {};
 document.addEventListener('DOMContentLoaded', function() {
     loadTelefoonMerken();
     loadVerkoopPrijzen();
+    laadProducten(); // Call laadProducten here
 });
 
 function loadTelefoonMerken() {
     const merkSelect = document.getElementById('telefoonMerk');
-    
+
     Object.keys(telefoonModellen).forEach(merk => {
         const option = document.createElement('option');
         option.value = merk;
@@ -53,10 +53,10 @@ async function loadVerkoopPrijzen() {
 document.getElementById('telefoonMerk').addEventListener('change', function() {
     const selectedMerk = this.value;
     const modelSelect = document.getElementById('telefoonModel');
-    
+
     // Clear previous models
     modelSelect.innerHTML = '<option value="">Selecteer model</option>';
-    
+
     if (selectedMerk && telefoonModellen[selectedMerk]) {
         telefoonModellen[selectedMerk].forEach(model => {
             const option = document.createElement('option');
@@ -70,24 +70,24 @@ document.getElementById('telefoonMerk').addEventListener('change', function() {
 // Handle price estimation form
 document.getElementById('priceEstimatorForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const merk = document.getElementById('telefoonMerk').value;
     const model = document.getElementById('telefoonModel').value;
     const conditie = document.getElementById('conditie').value;
     const opslag = document.getElementById('opslagcapaciteit').value;
-    
+
     if (!merk || !model || !conditie) {
         alert('Vul alle verplichte velden in');
         return;
     }
-    
+
     calculatePrice(merk, model, conditie, opslag);
 });
 
 function calculatePrice(merk, model, conditie, opslag) {
     const modelKey = `${merk}-${model}`;
     let basisPrijs = 0;
-    
+
     // Get base price from admin settings or use default estimation
     if (verkoopPrijzen[modelKey]) {
         basisPrijs = verkoopPrijzen[modelKey].prijs;
@@ -95,23 +95,23 @@ function calculatePrice(merk, model, conditie, opslag) {
         // Default price estimation based on brand and model patterns
         basisPrijs = getDefaultPrice(merk, model);
     }
-    
+
     // Apply condition multiplier
     const conditieMultiplier = conditieMultipliers[conditie] || 0.5;
     let finalPrice = basisPrijs * conditieMultiplier;
-    
+
     // Storage bonus (if applicable)
     if (opslag && opslag !== 'Onbekend') {
         const storageBonus = getStorageBonus(opslag);
         finalPrice += storageBonus * conditieMultiplier;
     }
-    
+
     // Round to nearest 5 euros
     finalPrice = Math.round(finalPrice / 5) * 5;
-    
+
     // Minimum price of 10 euros
     finalPrice = Math.max(finalPrice, 10);
-    
+
     displayPrice(finalPrice);
 }
 
@@ -125,16 +125,16 @@ function getDefaultPrice(merk, model) {
         'Huawei': 150,
         'Xiaomi': 150
     };
-    
+
     let basePrice = brandBasePrice[merk] || 100;
-    
+
     // Adjust based on model (newer/premium models get higher base price)
     if (model.includes('Pro') || model.includes('Ultra') || model.includes('Max')) {
         basePrice *= 1.5;
     } else if (model.includes('Plus') || model.includes('+')) {
         basePrice *= 1.3;
     }
-    
+
     // Year-based adjustments (rough estimation)
     if (model.includes('15') || model.includes('24')) {
         basePrice *= 1.4;
@@ -149,7 +149,7 @@ function getDefaultPrice(merk, model) {
     } else {
         basePrice *= 0.4;
     }
-    
+
     return Math.max(basePrice, 50);
 }
 
@@ -162,17 +162,77 @@ function getStorageBonus(opslag) {
         '512GB': 75,
         '1TB': 100
     };
-    
+
     return storageBonus[opslag] || 0;
 }
 
 function displayPrice(price) {
     document.getElementById('estimatedPrice').textContent = `€${price}`;
     document.getElementById('priceResult').style.display = 'block';
-    
+
     // Scroll to result
     document.getElementById('priceResult').scrollIntoView({
         behavior: 'smooth',
         block: 'center'
+    });
+}
+
+// Verkoop pagina JavaScript
+
+async function laadProducten() {
+    try {
+        const response = await fetch('/api/producten');
+        const producten = await response.json();
+
+        displayProducten(producten);
+    } catch (error) {
+        console.error('Fout bij laden van producten:', error);
+    }
+}
+
+function displayProducten(producten) {
+    let productGrid = document.getElementById('productGrid');
+
+    // Create product grid if it doesn't exist
+    if (!productGrid) {
+        const verkoopSection = document.querySelector('#verkoop');
+        if (verkoopSection) {
+            productGrid = document.createElement('div');
+            productGrid.id = 'productGrid';
+            productGrid.className = 'product-grid';
+            verkoopSection.appendChild(productGrid);
+        } else {
+            return;
+        }
+    }
+
+    if (producten.length === 0) {
+        productGrid.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">Geen producten beschikbaar</p>';
+        return;
+    }
+
+    productGrid.innerHTML = '';
+
+    producten.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+
+        const hoofdFoto = product.fotos && product.fotos.length > 0 ? product.fotos[0] : '/img/logo.jpeg';
+
+        productCard.innerHTML = `
+            <div class="product-image">
+                <img src="${hoofdFoto}" alt="${product.titel}" onclick="window.open('product.html?id=${product.id}', '_blank')">
+            </div>
+            <div class="product-content">
+                <h3>${product.titel}</h3>
+                <div class="product-price">€${parseFloat(product.prijs).toFixed(2)}</div>
+                <p class="product-description">${product.beschrijving.substring(0, 100)}${product.beschrijving.length > 100 ? '...' : ''}</p>
+                <button class="btn btn-primary" onclick="window.open('product.html?id=${product.id}', '_blank')">
+                    Bekijk Product
+                </button>
+            </div>
+        `;
+
+        productGrid.appendChild(productCard);
     });
 }
