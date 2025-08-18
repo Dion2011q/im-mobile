@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verkoop - IM-Mobile</title>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/verkoop.css">
+    <link rel="stylesheet" href="css/shop.css">
     <script src="js/script.js" defer></script>
     <script src="js/verkoop.js" defer></script>
+    <script src="js/shop.js" defer></script>
     <script>
         // Load products when page loads
         document.addEventListener('DOMContentLoaded', function() {
             laadProducten();
         });
     </script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
 </head>
 <body>
     <div class="top-bar">
@@ -45,12 +53,13 @@
             </div>
     </header>
     <main>
-        <div class="container">
-            <div class="verkoop-hero">
-                <h1>Verkoop Uw Telefoon</h1>
-                <p>Krijg direct een schatting van de waarde van uw toestel</p>
-            </div>
 
+        <section class="shop-intro">
+            <h2>Welkom bij onze webshop</h2>
+            <p>Ontdek hier de nieuwste smartphones, accessoires en meer. Of je nu op zoek bent naar de nieuwste iPhone of een betrouwbare Samsung, bij IM-Mobile vind je altijd wat je zoekt.</p>
+            <p>Bij IM-Mobile kunt u ook eenvoudig uw oude toestel verkopen en een eerlijke prijs krijgen.</p>
+        </section>
+        <div class="container">
             <div class="price-estimator">
                 <div class="estimator-card">
                     <h2>📱 Prijsschatting Tool</h2>
@@ -170,9 +179,12 @@
                 </div>
             </div>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
-    </footer>
+
+    <section class="product-grid" id="product-container"> <!-- Producten worden hier geladen (niet verwijderen)-->
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
+</footer>
 </body>
 </html>
