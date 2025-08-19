@@ -25,7 +25,7 @@
   margin-bottom: 3rem;
 }
 
-.contact-info {
+.contact-infocard {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

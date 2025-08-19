@@ -15,6 +15,11 @@
     <meta property="og:type" content="website">
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shop.css">
+    <script src="/js/script.js" defer></script>
+    <script src="/js/shop.js" defer></script>
+    <link rel="stylesheet" href="/css/hamburger.css">
+  <script src="/js/hamburger.js" defer></script>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
@@ -40,26 +45,29 @@
         </div>
     </div>
     <header>
-        <div class="header-content">
-            <h1>IM-MOBILE</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#about">Over ons</a></li>
-                    <li><a href="verkoop.html">Verkoop</a></li>
-                    <li><a href="service.html">Service</a></li>
-                    <li><a href="webshop.html">webshop</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="account.html">Mijn Account</a></li>
-                    <li><a href="reparatie.html" class="repair-btn">MELD JE REPARATIE</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+            <div class="header-content">
+                <h1>IM-MOBILE</h1>
+                <nav id="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#about">Over ons</a></li>
+                        <li><a href="verkoop.html">Verkoop</a></li>
+                        <li><a href="service.html">Service</a></li>
+                        <li><a href="webshop.html">Webshop</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="account.html">Mijn Account</a></li>
+                        <li><a href="reparatie.html" class="repair-btn">MELD JE REPARATIE</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <button class="hamburger" id="hamburger">☰</button>
+        </header>
     <main>
-        <h1>Tweedehands Telefoons</h1>
-        <p>Refurbished toestellen met garantie. Alle telefoons zijn getest en klaar voor gebruik.</p>
-
+        <section class="shop-intro">
+            <h2>Welkom bij onze webshop</h2>
+            <p>Ontdek hier refurbished smartphones, accessoires en meer. Of je nu op zoek bent naar een mooie iPhone of een betrouwbare Samsung, bij IM-Mobile vind je altijd wat je zoekt.</p>
+            <p>De refurbished toestellen komen met garantie. Alle telefoons zijn getest en klaar voor gebruik.</p>
+        </section>
         <div id="loading">Laden...</div>
         <div id="error-message" style="display: none;">
             <p>Er is een fout opgetreden bij het laden van de producten.</p>

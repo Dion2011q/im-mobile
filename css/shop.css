@@ -11,6 +11,10 @@ main {
     padding: 0 1rem;
 }
 
+#loading, #error-message {
+    text-align: center;
+}
+
 /* Introductie sectie */
 .shop-intro {
     text-align: center;

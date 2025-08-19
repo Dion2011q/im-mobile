@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mijn Account - IM-Mobile</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/hamburger.css">
+    <script src="/js/hamburger.js" defer></script>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
@@ -266,20 +268,22 @@
     </div>
     <header>
             <div class="header-content">
-                <h1>IM-MOBILE</h1>
-                <nav>
+                <h1>IM-MOBILE</h1>   
+                <nav id="nav-menu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
+                        <li><a href="webshop.html">Webshop</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="account.html">Mijn Account</a></li>
-                        <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                        <li><a href="reparatie.html" class="repair-btn">MELD JE REPARATIE</a></li>
                     </ul>
                 </nav>
             </div>
-    </header>
+            <button class="hamburger" id="hamburger">☰</button>
+        </header>
     <!-- Dark mode toggle -->
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

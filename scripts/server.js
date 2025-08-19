@@ -8,7 +8,7 @@ const multer = require('multer');
 const compression = require('compression');
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

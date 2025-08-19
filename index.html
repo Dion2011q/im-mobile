@@ -92,9 +92,10 @@
 
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/index.css">
-        <link rel="stylesheet" href="/css/performance.css">
+        <link rel="stylesheet" href="/css/hamburger.css">
         <script src="/js/script.js" defer></script>
         <script src="/js/index-repair.js" defer></script>
+        <script src="/js/hamburger.js" defer></script>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
@@ -116,19 +117,20 @@
         <header>
             <div class="header-content">
                 <h1>IM-MOBILE</h1>
-                <nav>
+                <nav id="nav-menu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
-                        <li><a href="webshop.html">webshop</a></li>
+                        <li><a href="webshop.html">Webshop</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="account.html">Mijn Account</a></li>
-                        <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                        <li><a href="reparatie.html" class="repair-btn">MELD JE REPARATIE</a></li>
                     </ul>
                 </nav>
             </div>
+            <button class="hamburger" id="hamburger">☰</button>
         </header>
         <main>
             <section id="hero">
@@ -187,10 +189,18 @@
             </section>
 
             <section id="about">
-                <h2>Over IM-Mobile</h2>
-                <p>Al jaren repareren we in Hardenberg telefoons en tablets. Van een gebroken scherm tot een lege batterij - we kennen alle merken en modellen door en door.</p>
-                <p>Je vindt ons op Oosteinde 5A, midden in het centrum. Geen afspraak nodig, gewoon binnenlopen kan ook. We kijken altijd eerst gratis wat er aan de hand is.</p>
-                <p>Eerlijke prijzen, geen verrassingen achteraf. En als we iets repareren, krijg je daar een jaar garantie op.</p>
+                <div class="container">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2>Over IM-Mobile</h2>
+                        </div>
+                        <div class="section-body">
+                            <p>Al jaren repareren we in Hardenberg telefoons en tablets. Van een gebroken scherm tot een lege batterij. We kennen alle merken en modellen door en door.</p>
+                            <p>Je vindt ons op Oosteinde 5A, midden in het centrum. Geen afspraak nodig, gewoon binnenlopen kan ook. We kijken altijd eerst gratis wat er aan de hand is.</p>
+                            <p>Eerlijke prijzen, geen verrassingen achteraf. En als we iets repareren, krijg je daar een jaar garantie op.</p>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section id="team">
                 <h2>Ons Team</h2>
@@ -227,7 +237,7 @@
                         Mijn Iphone 7 laten maken, lcd scherm was kapot. Uitstekende service voor een goede prijs! Was binnen 20 minuten klaar.<br><strong>- Robin Sellies</strong>
                     </li>
                 </ul>
-                <p>Wij waarderen uw feedback!</p>
+                <p id="reviewwaarderen">Wij waarderen uw feedback!</p>
                 <a href="https://www.google.com/search?sa=X&sca_esv=3af941f69087be74&biw=1866&bih=946&tbm=lcl&q=reviews%20voor%20telefoonwinkel%20hardenberg%20im-mobile%20telefoon%20reparatie&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDA1NDGzMDMyMbewMDYwMDY3Mt7AyPiK0bkotSwztbxYoSw_v0ihJDUnNS0_P688My87NUchI7EoJTUvKbUoXSEzVzc3PykzJxWuRqEotSCxKLEkM3URKzVMAQBVaPwcpwAAAA&rldimm=10514686247883003723&hl=nl-NL&ved=0CBEQ5foLahcKEwiAgpn5oYaPAxUAAAAAHQAAAAAQBQ#lkt=LocalPoiReviews&arid=ChdDSUhNMG9nS0VJQ0FnSUN6dXRuV3RnRRAB" target="_blank">Schrijf zelf ook een review op Google <u>hier</u></a>
             </section>
 
@@ -238,15 +248,13 @@
                             <h2>Contact</h2>
                         </div>
                         <div id="section-contact-1">
-                        <p>Email: <a href="mailto:info@im-mobile.nl">info@im-mobile.nl</a></p>
-                        <p>Telefoon: <a href="#" class="phone-link" data-phone="0655628064">06 5562 8064</a></p>
-                        <p>Adres: Oosteinde 5A, 7772 CA Hardenberg</p>
-                        <p>Google Maps: <a href="https://maps.app.goo.gl/xRvQuyTH49kNkJ2U8" target="_blank">Bekijk op kaart</a></p>
-                    </div>
-                        <div id="section-contact-2">
-                        
+                            <p>Email: <a href="mailto:info@im-mobile.nl">info@im-mobile.nl</a></p>
+                            <p>Telefoon: <a href="#" class="phone-link" data-phone="0655628064">06 5562 8064</a></p>
+                            <p>Adres: Oosteinde 5A, 7772 CA Hardenberg</p>
+                            <p>Google Maps: <a href="https://maps.app.goo.gl/xRvQuyTH49kNkJ2U8" target="_blank">Bekijk op kaart</a></p>
                         </div>
-                </div>
+                    </div>
+                </div>  
             </section>
             <div class="opening-hours">
                 <h2>Openingstijden:</h2>

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/service.css">
     <script src="js/script.js" defer></script>
+    <link rel="stylesheet" href="/css/hamburger.css">
+  <script src="/js/hamburger.js" defer></script>
 </head>
 <body>
     <div class="top-bar">
@@ -24,20 +26,21 @@
     <header>
             <div class="header-content">
                 <h1>IM-MOBILE</h1>
-                <nav>
+                <nav id="nav-menu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
-                        <li><a href="webshop.html">webshop</a></li>
+                        <li><a href="webshop.html">Webshop</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="account.html">Mijn Account</a></li>
-                        <li><a href="reparatie.html" class="repair-btn">PLAN JE REPARATIE</a></li>
+                        <li><a href="reparatie.html" class="repair-btn">MELD JE REPARATIE</a></li>
                     </ul>
                 </nav>
             </div>
-    </header>
+            <button class="hamburger" id="hamburger">☰</button>
+        </header>
     <main>
         <div class="container">
             <div class="service-hero">
@@ -157,6 +160,7 @@
     </main>
     <footer>
         <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
+        <p><a href="algemene-voorwaarden.html" id="algemene-voorwaarden-link">Algemene Voorwaarden</a></p>
     </footer>
 </body>
 </html>

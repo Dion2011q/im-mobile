@@ -183,7 +183,7 @@
 #reviews {
     text-align: center;
     padding: 40px 20px;
-    background-color: #f8f9fa;
+    background-color: var(--background-color);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -224,12 +224,12 @@
 }
 
 #reviews ul li {
-    background-color: var(--white);
+    background-color: var(--surface-color);
     border: 1px solid var(--border-color);
     padding: 25px;
     border-radius: 12px;
     font-style: italic;
-    color: #333;
+    color: var(--text-color);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -267,6 +267,10 @@
     font-weight: 600;
     margin-top: 10px;
     display: inline-block;
+}
+
+#reviewwaarderen {
+    margin-top: 18px;
 }
 
 #contact {
@@ -457,12 +461,6 @@ footer {
         margin-right: 10px;
         display: block;
         margin-bottom: 5px;
-    }
-
-    .header-content {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
     }
 
     header h1 {
