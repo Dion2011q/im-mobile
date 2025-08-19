@@ -1,3 +1,4 @@
+
 let isAdminLoggedIn = false;
 
 document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
@@ -83,7 +84,6 @@ async function laadReparaties() {
         ? `<button class="btn btn-primary" onclick="toonOfferteModal(${reparatie.id}, '${reparatie.klantNaam}', '${reparatie.beschrijving.replace(/'/g, "\\'")}')">Offerte maken</button>`
         : reparatie.heeftOfferte ? '<span style="color: green; font-size: 12px;">✓ Offerte gemaakt</span>' : '';
 
-      // Offerte status display
       let offerteStatusDisplay = 'Geen offerte';
       if (reparatie.heeftOfferte) {
         const offerteStatus = reparatie.offerteStatus || 'Pending';
@@ -388,7 +388,6 @@ function maakCelUitklappbaar(inhoud, id) {
 }
 
 function toonVolledigeInhoud(id) {
-  // Hide all other expanded content first
   document.querySelectorAll('.expanded-content').forEach(el => {
     el.style.display = 'none';
   });
@@ -406,7 +405,6 @@ function sluitUitgebreideInhoud(id) {
   }
 }
 
-// Offerte per afspraak functions
 let huidigAfspraakId = null;
 
 function toonOfferteModal(afspraakId, klantNaam, beschrijving) {
@@ -446,7 +444,22 @@ function toonOfferteModal(afspraakId, klantNaam, beschrijving) {
     </div>
   `;
 
+  const rect = clickedElement.getBoundingClientRect();
+  menu.style.position = 'fixed';
+  menu.style.top = (rect.bottom + 5) + 'px';
+  menu.style.left = rect.left + 'px';
+  menu.style.zIndex = '1000';
+
   document.body.appendChild(modal);
+
+  setTimeout(() => {
+    document.addEventListener('click', function closeMenu(e) {
+      if (!modal.contains(e.target) && e.target !== clickedElement) {
+        modal.remove();
+        document.removeEventListener('click', closeMenu);
+      }
+    });
+  }, 100);
 }
 
 async function maakAfspraakOfferte() {
@@ -492,7 +505,6 @@ async function maakAfspraakOfferte() {
   }
 }
 
-// Sales price management
 const telefoonModellenAdmin = {
     'Apple': ['iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15 Plus', 'iPhone 15', 'iPhone 14 Pro Max', 'iPhone 14 Pro', 'iPhone 14 Plus', 'iPhone 14', 'iPhone 13 Pro Max', 'iPhone 13 Pro', 'iPhone 13', 'iPhone 13 mini', 'iPhone 12 Pro Max', 'iPhone 12 Pro', 'iPhone 12', 'iPhone 12 mini', 'iPhone SE (2022)', 'iPhone 11 Pro Max', 'iPhone 11 Pro', 'iPhone 11', 'iPhone XS Max', 'iPhone XS', 'iPhone XR', 'iPhone X', 'iPhone 8 Plus', 'iPhone 8', 'iPhone 7 Plus', 'iPhone 7', 'iPhone SE (2020)', 'iPhone 6s Plus', 'iPhone 6s', 'iPhone 6 Plus', 'iPhone 6', 'iPhone SE (1st gen)', 'Anders iPhone'],
     'Samsung': ['Galaxy S24 Ultra', 'Galaxy S24+', 'Galaxy S24', 'Galaxy S23 Ultra', 'Galaxy S23+', 'Galaxy S23', 'Galaxy S23 FE', 'Galaxy S22 Ultra', 'Galaxy S22+', 'Galaxy S22', 'Galaxy S21 Ultra', 'Galaxy S21+', 'Galaxy S21', 'Galaxy S21 FE', 'Galaxy S20 Ultra', 'Galaxy S20+', 'Galaxy S20', 'Galaxy S20 FE', 'Galaxy Note 20 Ultra', 'Galaxy Note 20', 'Galaxy Note 10+', 'Galaxy Note 10', 'Galaxy S10+', 'Galaxy S10', 'Galaxy S10e', 'Galaxy S9+', 'Galaxy S9', 'Galaxy A75', 'Galaxy A55', 'Galaxy A54', 'Galaxy A53', 'Galaxy A52', 'Galaxy A34', 'Galaxy A33', 'Galaxy A25', 'Galaxy A24', 'Galaxy A23', 'Galaxy A22', 'Galaxy A15', 'Galaxy A14', 'Galaxy A13', 'Galaxy A12', 'Anders Samsung'],
@@ -615,7 +627,6 @@ async function verwijderVerkoopPrijs(key) {
   }
 }
 
-// Product management functions
 async function laadProducten() {
   if (!isAdminLoggedIn) return;
 
@@ -684,7 +695,6 @@ async function voegProductToe() {
   formData.append('prijs', parseFloat(prijs.value));
   formData.append('beschrijving', beschrijving.value.trim());
 
-  // Add photos
   for (let i = 0; i < fotos.files.length; i++) {
     formData.append('fotos', fotos.files[i]);
   }
@@ -697,13 +707,11 @@ async function voegProductToe() {
 
     if (response.ok) {
       alert('Product toegevoegd!');
-      // Reset form
       titel.value = '';
       prijs.value = '';
       beschrijving.value = '';
       fotos.value = '';
 
-      // Reload products
       laadProducten();
     } else {
       const error = await response.json();
@@ -741,7 +749,6 @@ function toonProductDetails(id) {
   window.open(`product.html?id=${id}`, '_blank');
 }
 
-// Close expanded content when clicking outside or pressing ESC
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
     document.querySelectorAll('.expanded-content').forEach(el => {

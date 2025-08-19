@@ -1,6 +1,6 @@
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Simuleer een JSON-antwoord van de backend
     const products = [
         {
             id: 1,
@@ -20,17 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             price: 759.00,
             image: "https://via.placeholder.com/300x300.png?text=Google+Pixel+8"
         }
-        // Voeg hier meer producten toe
     ];
 
     const productContainer = document.getElementById('product-container');
 
-    // Functie om een productkaart te creëren
     function createProductCard(product) {
         const productCard = document.createElement('div');
         productCard.classList.add('product-card');
 
-        // De "Bekijk product" knop linkt naar product.html met de product ID als parameter
         productCard.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <div class="product-info">
@@ -43,18 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return productCard;
     }
 
-    // Loop over de producten en voeg ze toe aan de container
     products.forEach(product => {
         const card = createProductCard(product);
         productContainer.appendChild(card);
     });
 
-    // Event listener voor de "Voeg toe aan winkelwagen" knop
     productContainer.addEventListener('click', (event) => {
         if (event.target.classList.contains('add-to-cart-btn')) {
             const productId = event.target.dataset.productId;
             alert(`Product met ID ${productId} is toegevoegd aan de winkelwagen!`);
-            // Hier komt later de logica om het product toe te voegen aan de winkelwagen
         }
     });
 

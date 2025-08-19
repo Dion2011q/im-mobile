@@ -30,26 +30,21 @@ async function laadProduct(productId) {
 }
 
 function displayProduct(product) {
-    // Hide loading and show product details
     const loadingEl = document.getElementById('productLoading');
     const detailsEl = document.getElementById('productDetails');
     
     if (loadingEl) loadingEl.style.display = 'none';
     if (detailsEl) detailsEl.style.display = 'block';
     
-    // Set product title
     const titleEl = document.getElementById('productTitle');
     if (titleEl) titleEl.textContent = product.titel;
     
-    // Set product price
     const priceEl = document.getElementById('productPrice');
     if (priceEl) priceEl.textContent = `€${parseFloat(product.prijs).toFixed(2)}`;
     
-    // Set product description
     const descEl = document.getElementById('productDescription');
     if (descEl) descEl.textContent = product.beschrijving;
     
-    // Handle images
     if (product.fotos && product.fotos.length > 0) {
         const mainImageEl = document.getElementById('mainImage');
         const thumbnailGalleryEl = document.getElementById('thumbnailGallery');
@@ -71,7 +66,6 @@ function displayProduct(product) {
             });
         }
     } else {
-        // Use default image if no photos
         const mainImageEl = document.getElementById('mainImage');
         if (mainImageEl) {
             mainImageEl.src = '/img/logo.jpeg';

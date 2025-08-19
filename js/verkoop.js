@@ -1,4 +1,4 @@
-// Phone models data - uitgebreid en up-to-date
+
 const telefoonModellen = {
     'Apple': [
         'iPhone 16 Pro Max', 'iPhone 16 Pro', 'iPhone 16 Plus', 'iPhone 16',
@@ -85,8 +85,6 @@ const telefoonModellen = {
     ]
 };
 
-
-// Price multipliers based on condition
 const conditieMultipliers = {
     'als-nieuw': 1.0,
     'zeer-goed': 0.85,
@@ -97,11 +95,10 @@ const conditieMultipliers = {
 
 let verkoopPrijzen = {};
 
-// Load phone models on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadTelefoonMerken();
     loadVerkoopPrijzen();
-    laadProducten(); // Call laadProducten here
+    laadProducten();
 });
 
 function loadTelefoonMerken() {
@@ -115,7 +112,6 @@ function loadTelefoonMerken() {
     });
 }
 
-// Load sales prices from server
 async function loadVerkoopPrijzen() {
     try {
         const response = await fetch('/api/verkoop-prijzen');
@@ -127,12 +123,10 @@ async function loadVerkoopPrijzen() {
     }
 }
 
-// Handle phone brand selection
 document.getElementById('telefoonMerk').addEventListener('change', function() {
     const selectedMerk = this.value;
     const modelSelect = document.getElementById('telefoonModel');
 
-    // Clear previous models
     modelSelect.innerHTML = '<option value="">Selecteer model</option>';
 
     if (selectedMerk && telefoonModellen[selectedMerk]) {
@@ -145,7 +139,6 @@ document.getElementById('telefoonMerk').addEventListener('change', function() {
     }
 });
 
-// Handle price estimation form
 document.getElementById('priceEstimatorForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -166,35 +159,28 @@ function calculatePrice(merk, model, conditie, opslag) {
     const modelKey = `${merk}-${model}`;
     let basisPrijs = 0;
 
-    // Get base price from admin settings or use default estimation
     if (verkoopPrijzen[modelKey]) {
         basisPrijs = verkoopPrijzen[modelKey].prijs;
     } else {
-        // Default price estimation based on brand and model patterns
         basisPrijs = getDefaultPrice(merk, model);
     }
 
-    // Apply condition multiplier
     const conditieMultiplier = conditieMultipliers[conditie] || 0.5;
     let finalPrice = basisPrijs * conditieMultiplier;
 
-    // Storage bonus (if applicable)
     if (opslag && opslag !== 'Onbekend') {
         const storageBonus = getStorageBonus(opslag);
         finalPrice += storageBonus * conditieMultiplier;
     }
 
-    // Round to nearest 5 euros
     finalPrice = Math.round(finalPrice / 5) * 5;
 
-    // Minimum price of 10 euros
     finalPrice = Math.max(finalPrice, 10);
 
     displayPrice(finalPrice);
 }
 
 function getDefaultPrice(merk, model) {
-    // Default price estimation logic based on brand and model
     const brandBasePrice = {
         'Apple': 400,
         'Samsung': 300,
@@ -206,14 +192,12 @@ function getDefaultPrice(merk, model) {
 
     let basePrice = brandBasePrice[merk] || 100;
 
-    // Adjust based on model (newer/premium models get higher base price)
     if (model.includes('Pro') || model.includes('Ultra') || model.includes('Max')) {
         basePrice *= 1.5;
     } else if (model.includes('Plus') || model.includes('+')) {
         basePrice *= 1.3;
     }
 
-    // Year-based adjustments (rough estimation)
     if (model.includes('15') || model.includes('24')) {
         basePrice *= 1.4;
     } else if (model.includes('14') || model.includes('23')) {
@@ -248,14 +232,11 @@ function displayPrice(price) {
     document.getElementById('estimatedPrice').textContent = `€${price}`;
     document.getElementById('priceResult').style.display = 'block';
 
-    // Scroll to result
     document.getElementById('priceResult').scrollIntoView({
         behavior: 'smooth',
         block: 'center'
     });
 }
-
-// Verkoop pagina JavaScript
 
 async function laadProducten() {
     try {
@@ -271,7 +252,6 @@ async function laadProducten() {
 function displayProducten(producten) {
     let productGrid = document.getElementById('productGrid');
 
-    // Create product grid if it doesn't exist
     if (!productGrid) {
         const verkoopSection = document.querySelector('#verkoop');
         if (verkoopSection) {

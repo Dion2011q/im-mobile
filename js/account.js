@@ -1,6 +1,6 @@
+
 let currentUser = null;
 
-// Check if user is logged in
 if (localStorage.getItem('userId')) {
   currentUser = {
     id: localStorage.getItem('userId'),
@@ -11,7 +11,6 @@ if (localStorage.getItem('userId')) {
   document.getElementById('loginSection').style.display = 'block';
 }
 
-// Login form
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -42,7 +41,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Register form
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -257,7 +255,6 @@ async function bekijkOfferteDetails(afspraakId) {
       </div>
     `;
 
-    // Add styles
     const style = document.createElement('style');
     style.textContent = `
       .offerte-modal {
@@ -353,5 +350,3 @@ function showMessage(message, type) {
     messageEl.innerHTML = '';
   }, 5000);
 }
-
-// Function is already defined above, removing duplicate

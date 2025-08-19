@@ -1,0 +1,19 @@
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://im-mobile.nl/sitemap.xml
+
+# Disallow admin areas if any
+Disallow: /admin/
+Disallow: /scripts/
+Disallow: /data/
+
+# Allow important pages
+Allow: /
+Allow: /contact.html
+Allow: /webshop.html
+Allow: /reparatie.html
+Allow: /verkoop.html
+Allow: /service.html
