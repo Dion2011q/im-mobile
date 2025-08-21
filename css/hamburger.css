@@ -2,10 +2,22 @@
   font-size: 24px;
   background: var(--primary-color);
   border-radius: var(--border-radius);
+  border: none;
   color: var(--white);
   display: none; /* standaard verborgen */
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
+  transform: scale(1);
+}
+
+.hamburger:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+.hamburger:active {
+  background: var(--primary-hover);
+  transform: scale(0.9);
 }
 
 /* Responsive menu */
