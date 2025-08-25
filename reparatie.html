@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width">
   <title>Reparatie Inplannen - IM-Mobile</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="/css/hamburger.css">
-  <script src="/js/hamburger.js" defer></script>
 </head>
 <body data-theme="light"> <!-- Default theme is light -->
   <div class="top-bar">
         <div class="contact-info">
-            <a href="tel:+310523255001">📞 +31 0523 255 001</a>
+            <a href="#" onclick="showPhoneOptions()" id="phoneLink">📞 +31655628064</a>
             <a href="mailto:info@im-mobile.nl">✉️ info@im-mobile.nl</a>
             <a href="https://maps.app.goo.gl/xRvQuyTH49kNkJ2U8" target="_blank">📍 Hardenberg</a>
         <div class="rating">
@@ -23,10 +21,10 @@
   <header>
             <div class="header-content">
                 <h1>IM-MOBILE</h1>
-                <nav id="nav-menu">
+                <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#about">Over ons</a></li>
+                        <li><a href="#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
                         <li><a href="webshop.html">Webshop</a></li>
@@ -36,8 +34,7 @@
                     </ul>
                 </nav>
             </div>
-            <button class="hamburger" id="hamburger">☰</button>
-        </header>
+    </header>
   <!-- Dark mode toggle -->
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
       <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -257,15 +254,13 @@
         <h3>🔗 Navigatie</h3>
         <button onclick="window.location.href='admin.html'" class="btn">⚙️ Admin Pagina</button>
         <button onclick="window.location.href='account.html'" class="btn btn-success">👤 Mijn Account</button>
+        <button onclick="window.location.href='index.html'" class="btn btn-secondary">🏠 Terug naar Home</button>
       </div>
     </div>
 
     <div id="message"></div>
   </div>
-  <footer>
-        <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
-        <p><a href="algemene-voorwaarden.html" id="algemene-voorwaarden-link">Algemene Voorwaarden</a></p>
-    </footer>
+
   <script src="js/script.js"></script>
   <script src="js/repair-system.js"></script>
   <script>

@@ -1,42 +1,34 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verkoop je oude iPhone - IM-Mobile</title >
-
+    <title>Verkoop - IM-Mobile</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/verkoop.css">
-    <link rel="stylesheet" href="/css/hamburger.css">
-  <script src="/js/hamburger.js" defer></script>
-
     <script src="js/script.js" defer></script>
     <script src="js/verkoop.js" defer></script>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/img/favicon/site.webmanifest">
 </head>
 <body>
     <div class="top-bar">
         <div class="contact-info">
-            <a href="tel:+310523255001">📞 +31 0523 255 001</a>
+            <a href="#" onclick="showPhoneOptions()" id="phoneLink">📞 +31655628064</a>
             <a href="mailto:info@im-mobile.nl">✉️ info@im-mobile.nl</a>
             <a href="https://maps.app.goo.gl/xRvQuyTH49kNkJ2U8" target="_blank">📍 Hardenberg</a>
-            <div class="rating">
-                <span>⭐⭐⭐⭐⭐ 4.7</span>
-                <span>Sterren op Google</span>
+        <div class="rating">
+            <span>⭐⭐⭐⭐⭐ 4.7</span>
+            <span>Sterren op Google</span>
             </div>
         </div>
     </div>
     <header>
             <div class="header-content">
                 <h1>IM-MOBILE</h1>
-                <nav id="nav-menu">
+                <nav>
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#about">Over ons</a></li>
+                        <li><a href="#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
                         <li><a href="webshop.html">Webshop</a></li>
@@ -46,34 +38,31 @@
                     </ul>
                 </nav>
             </div>
-            <button class="hamburger" id="hamburger">☰</button>
-        </header>
-
+    </header>
     <main>
-        <section class="shop-intro">
-            <h2>Verkoop je oude iPhone</h2>
-            <p>Lever je iPhone in en ontvang een eerlijke prijs. Snel, simpel en duidelijk.</p>
-            <p>We bepalen de prijs op basis van model, conditie en opslag. Je krijgt direct een bod.</p>
-        </section>
-
         <div class="container">
+            <div class="verkoop-hero">
+                <h1>Verkoop Uw Telefoon</h1>
+                <p>Krijg direct een schatting van de waarde van uw toestel</p>
+            </div>
+
             <div class="price-estimator">
                 <div class="estimator-card">
-                    <h2>📱 Prijsschatting</h2>
-                    <p>Vul de gegevens van je iPhone in voor een indicatieve prijs.</p>
-
+                    <h2>📱 Prijsschatting Tool</h2>
+                    <p>Vul de gegevens van uw telefoon in voor een indicatieve prijs</p>
+                    
                     <form id="priceEstimatorForm">
                         <div class="form-group">
                             <label for="telefoonMerk">Merk *</label>
                             <select id="telefoonMerk" name="telefoonMerk" required>
-                                <option value="Apple" selected>Apple</option>
+                                <option value="">Selecteer merk</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="telefoonModel">Model *</label>
                             <select id="telefoonModel" name="telefoonModel" required>
-                                <option value="">Selecteer model</option>
+                                <option value="">Selecteer eerst een merk</option>
                             </select>
                         </div>
 
@@ -111,15 +100,15 @@
                             <span id="estimatedPrice">€0</span>
                         </div>
                         <p class="price-note">
-                            Dit is een indicatieve prijs. De definitieve prijs volgt na inspectie in de winkel.
+                            Dit is een indicatieve prijs. De werkelijke prijs kan afwijken na inspectie in de winkel.
                         </p>
                         <div class="next-steps">
-                            <h4>Volgende Stappen</h4>
+                            <h4>Volgende Stappen:</h4>
                             <ol>
-                                <li>Breng je iPhone naar onze winkel</li>
+                                <li>Breng uw telefoon naar onze winkel</li>
                                 <li>Wij inspecteren het toestel grondig</li>
-                                <li>Je krijgt direct een definitieve prijs</li>
-                                <li>Akkoord? Dan betalen we direct uit</li>
+                                <li>U krijgt direct een definitieve prijs</li>
+                                <li>Akkoord? Dan betalen we direct uit!</li>
                             </ol>
                             <div class="cta-buttons">
                                 <a href="contact.html" class="btn btn-primary">Kom Langs</a>
@@ -134,15 +123,15 @@
                 <div class="info-grid">
                     <div class="info-card">
                         <h3>🔍 Grondige Inspectie</h3>
-                        <p>Wij controleren alle functies van je iPhone om de juiste prijs te bepalen.</p>
+                        <p>Wij controleren alle functies van uw telefoon om de juiste prijs te bepalen</p>
                     </div>
                     <div class="info-card">
                         <h3>💸 Directe Uitbetaling</h3>
-                        <p>Akkoord met onze prijs? Dan betalen we direct contant of via pin.</p>
+                        <p>Akkoord met onze prijs? Dan betalen we direct contant of via pin</p>
                     </div>
                     <div class="info-card">
                         <h3>🏪 Bezoek Onze Winkel</h3>
-                        <p>Kom langs in Hardenberg voor een persoonlijke beoordeling.</p>
+                        <p>Kom langs in Hardenberg voor een persoonlijke beoordeling</p>
                     </div>
                 </div>
             </div>
@@ -154,7 +143,7 @@
                         <li>✅ Geldig identiteitsbewijs</li>
                         <li>✅ Originele lader (indien beschikbaar)</li>
                         <li>✅ Telefoon moet uitgeschakeld zijn</li>
-                        <li>✅ iCloud-account moet afgekoppeld zijn</li>
+                        <li>✅ iCloud/Google account moet afgekoppeld zijn</li>
                         <li>✅ Factory reset uitgevoerd</li>
                     </ul>
                 </div>
@@ -170,17 +159,15 @@
                     </div>
                     <div class="contact-option">
                         <h4>📞 Bel Ons</h4>
-                        <p><a href="#" class="phone-link" data-phone="0655628064">06 5562 8064</a></p>
+                        <p><a href="tel:+310523255001">+31 0523 255 001</a></p>
                         <p>Voor vragen en afspraken</p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
     <footer>
         <p>&copy; 2025 IM-Mobile. Alle rechten voorbehouden.</p>
-        <p><a href="algemene-voorwaarden.html" id="algemene-voorwaarden-link">Algemene Voorwaarden</a></p>
     </footer>
 </body>
 </html>
