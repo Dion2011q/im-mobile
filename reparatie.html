@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width">
   <title>Reparatie Inplannen - IM-Mobile</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/hamburger.css">
+  <script src="/js/hamburger.js" defer></script>
 </head>
 <body data-theme="light"> <!-- Default theme is light -->
   <div class="top-bar">
@@ -20,11 +22,11 @@
     </div>
   <header>
             <div class="header-content">
-                <h1>IM-MOBILE</h1>
-                <nav>
+                <a class="headertitle" href="index.html">IM-MOBILE</a>
+                <nav id="nav-menu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#about">Over ons</a></li>
+                        <li><a href="index.html#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
                         <li><a href="webshop.html">Webshop</a></li>
@@ -34,6 +36,7 @@
                     </ul>
                 </nav>
             </div>
+            <button class="hamburger" id="hamburger">☰</button>
     </header>
   <!-- Dark mode toggle -->
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">

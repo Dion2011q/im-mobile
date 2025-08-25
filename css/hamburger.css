@@ -21,7 +21,7 @@
 }
 
 /* Responsive menu */
-@media (max-width: 800px) {
+@media (max-width: 1171px) {
   nav {
     display: none; /* menu standaard verborgen */
     position: absolute;
@@ -30,7 +30,6 @@
     width: 100%;
     background: var(--background-color);
     padding: 15px;
-
   }
 
   nav ul {

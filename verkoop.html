@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/verkoop.css">
     <script src="js/script.js" defer></script>
     <script src="js/verkoop.js" defer></script>
+    <link rel="stylesheet" href="/css/hamburger.css">
+    <script src="/js/hamburger.js" defer></script>
 </head>
 <body>
     <div class="top-bar">
@@ -24,11 +26,11 @@
     </div>
     <header>
             <div class="header-content">
-                <h1>IM-MOBILE</h1>
-                <nav>
+                <a class="headertitle" href="index.html">IM-MOBILE</a>
+                <nav id="nav-menu">
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#about">Over ons</a></li>
+                        <li><a href="index.html#about">Over ons</a></li>
                         <li><a href="verkoop.html">Verkoop</a></li>
                         <li><a href="service.html">Service</a></li>
                         <li><a href="webshop.html">Webshop</a></li>
@@ -38,7 +40,8 @@
                     </ul>
                 </nav>
             </div>
-    </header>
+            <button class="hamburger" id="hamburger">☰</button>
+        </header>
     <main>
         <div class="container">
             <div class="verkoop-hero">
