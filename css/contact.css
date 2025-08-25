@@ -1,5 +1,7 @@
 main {
   margin-bottom: 48px;
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
 
 .contact-hero {
@@ -107,7 +109,7 @@ main {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .contact-hero h1 {
     font-size: 2rem;
   }
