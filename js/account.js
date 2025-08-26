@@ -93,6 +93,20 @@ function logout() {
   showMessage('Succesvol uitgelogd!', 'success');
 }
 
+// ✅ Status vertaal functie
+function vertaalStatus(status) {
+  switch (status) {
+    case 'Pending':
+      return 'In afwachting';
+    case 'Geaccepteerd':
+      return 'Geaccepteerd';
+    case 'Afgewezen':
+      return 'Afgewezen';
+    default:
+      return status || 'Onbekend';
+  }
+}
+
 async function laadMijnReparaties() {
   if (!currentUser) {
     document.getElementById('reparatiesLijst').innerHTML = '<p style="color: red;">Je moet ingelogd zijn</p>';
@@ -134,7 +148,7 @@ async function laadMijnReparaties() {
           <td>${reparatie.tijd}</td>
           <td>${reparatie.eindTijd}</td>
           <td>
-            <span class="status ${reparatie.status.toLowerCase()}">${reparatie.status}</span>
+            <span class="status ${reparatie.status.toLowerCase()}">${vertaalStatus(reparatie.status)}</span>
           </td>
         </tr>
       `;
@@ -195,7 +209,7 @@ async function laadMijnOffertes() {
           <td>${offerte.offerteWerkzaamheden ? (offerte.offerteWerkzaamheden.length > 30 ? offerte.offerteWerkzaamheden.substring(0, 30) + '...' : offerte.offerteWerkzaamheden) : 'Geen beschrijving'}</td>
           <td>€${parseFloat(offerte.offertePrijs || 0).toFixed(2)}</td>
           <td>
-            <span class="status ${statusClass.replace('status-', '')}">${offerte.offerteStatus || 'Pending'}</span>
+            <span class="status ${statusClass.replace('status-', '')}">${vertaalStatus(offerte.offerteStatus)}</span>
           </td>
           <td>${acties}</td>
         </tr>
@@ -246,7 +260,7 @@ async function bekijkOfferteDetails(afspraakId) {
             <div class="beschrijving-box">${reparatie.offerteWerkzaamheden}</div>
           </div>
           <p><strong>Prijs:</strong> <span class="prijs">€${parseFloat(reparatie.offertePrijs).toFixed(2)}</span></p>
-          <p><strong>Status:</strong> ${reparatie.offerteStatus}</p>
+          <p><strong>Status:</strong> ${vertaalStatus(reparatie.offerteStatus)}</p>
         </div>
         ${kanAccepteren ? `
           <div class="offerte-acties">
@@ -353,5 +367,3 @@ function showMessage(message, type) {
     messageEl.innerHTML = '';
   }, 5000);
 }
-
-// Function is already defined above, removing duplicate
