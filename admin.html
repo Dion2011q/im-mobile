@@ -213,31 +213,53 @@
         </section>
 
         <section class="products-section">
-          <h2>Producten Beheer</h2>
+          <h2>Webshop Producten Beheer</h2>
           <div class="producten-beheer">
             <div class="product-form">
               <h3>Nieuw Product Toevoegen</h3>
-              <div class="form-row">
+              <div class="form-grid">
                 <div class="form-group">
-                  <label for="productTitel">Titel:</label>
-                  <input type="text" id="productTitel" placeholder="Bijv. iPhone 15 Pro Max - Gebruikt">
+                  <label for="productNaam">Product Naam:</label>
+                  <input type="text" id="productNaam" placeholder="bijv. iPhone 14 Pro">
+                </div>
+                <div class="form-group">
+                  <label for="productMerk">Merk:</label>
+                  <select id="productMerk">
+                    <option value="">Selecteer merk</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Google">Google</option>
+                    <option value="OnePlus">OnePlus</option>
+                    <option value="Huawei">Huawei</option>
+                    <option value="Xiaomi">Xiaomi</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="productConditie">Conditie:</label>
+                  <select id="productConditie">
+                    <option value="">Selecteer conditie</option>
+                    <option value="Nieuw">Nieuw</option>
+                    <option value="Als nieuw">Als nieuw</option>
+                    <option value="Zeer goed">Zeer goed</option>
+                    <option value="Goed">Goed</option>
+                    <option value="Refurbished">Refurbished</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for="productPrijs">Prijs (€):</label>
                   <input type="number" id="productPrijs" step="0.01" min="0" placeholder="0.00">
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="productBeschrijving">Beschrijving:</label>
-                <textarea id="productBeschrijving" rows="4" placeholder="Beschrijf het product, staat, kenmerken, etc."></textarea>
-              </div>
-              <div class="form-group">
-                <label for="productFotos">Foto's:</label>
-                <input type="file" id="productFotos" multiple accept="image/*">
-                <small>Je kunt meerdere foto's selecteren</small>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" onclick="voegProductToe()">Product Toevoegen</button>
+                <div class="form-group full-width">
+                  <label for="productBeschrijving">Beschrijving:</label>
+                  <textarea id="productBeschrijving" rows="3" placeholder="Beschrijving van het product..."></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label for="productAfbeelding">Afbeelding URL (optioneel):</label>
+                  <input type="url" id="productAfbeelding" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group full-width">
+                  <button class="btn btn-primary" onclick="voegProductToe()">Product Toevoegen</button>
+                </div>
               </div>
             </div>
             
@@ -247,6 +269,7 @@
             </div>
           </div>
         </section>
+
 
         <section class="sales-prices-section">
           <h2>Verkoop Prijzen Beheer</h2>
