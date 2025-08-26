@@ -5,4 +5,4 @@ node scripts/server.js
 
 
 de ip voor in je browser is:
-http://0.0.0.0:5001/
+http://0.0.0.0:6969/
