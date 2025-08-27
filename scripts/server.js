@@ -941,7 +941,6 @@ return tijden;
 
 // ⬇️ extra erbij: zip-download route
 const archiver = require("archiver");
-const path = require("path");
 
 app.get("/download-data", (req, res) => {
   const archive = archiver("zip", { zlib: { level: 9 } });
