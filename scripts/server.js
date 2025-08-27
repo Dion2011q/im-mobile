@@ -913,30 +913,45 @@ function genereerTijdSlots(datum = null) {
   const eindTotaalMinuten = eindUur * 60 + eindMinuut;
   const intervalMinuten = instellingen.afspraakDuur;
 
-  for (
-    let minuten = startTotaalMinuten;
-    minuten < eindTotaalMinuten;
-    minuten += intervalMinuten
-  ) {
-    const uren = Math.floor(minuten / 60);
-    const restMinuten = minuten % 60;
-    const tijd = `${uren.toString().padStart(2, "0")}:${restMinuten.toString().padStart(2, "0")}`;
+for (
+  let minuten = startTotaalMinuten;
+  minuten < eindTotaalMinuten;
+  minuten += intervalMinuten
+) {
+  const uren = Math.floor(minuten / 60);
+  const restMinuten = minuten % 60;
+  const tijd = `${uren.toString().padStart(2, "0")}:${restMinuten
+    .toString()
+    .padStart(2, "0")}`;
 
-    const tijdInPauze = pauzes.some((pauze) => {
-      if (datum && pauze.datum === datum) {
-        return tijd >= pauze.start && tijd < pauze.eind;
-      }
-      return false;
-    });
-
-    if (!tijdInPauze) {
-      tijden.push(tijd);
+  const tijdInPauze = pauzes.some((pauze) => {
+    if (datum && pauze.datum === datum) {
+      return tijd >= pauze.start && tijd < pauze.eind;
     }
-  }
+    return false;
+  });
 
-  return tijden;
+  if (!tijdInPauze) {
+    tijden.push(tijd);
+  }
 }
 
+return tijden;
+}
+
+// ⬇️ extra erbij: zip-download route
+const archiver = require("archiver");
+const path = require("path");
+
+app.get("/download-data", (req, res) => {
+  const archive = archiver("zip", { zlib: { level: 9 } });
+  res.attachment("data.zip");
+  archive.pipe(res);
+  archive.directory(path.join(__dirname, "data"), false);
+  archive.finalize();
+});
+
+// server starten
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server draait op poort ${PORT}`);
   console.log(
