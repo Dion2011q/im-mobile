@@ -946,7 +946,7 @@ app.get("/download-data", (req, res) => {
   const archive = archiver("zip", { zlib: { level: 9 } });
   res.attachment("data.zip");
   archive.pipe(res);
-  archive.directory(path.join(__dirname, "data"), false);
+  archive.directory(path.join(__dirname, "../data"), false);
   archive.finalize();
 });
 
