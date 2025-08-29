@@ -633,6 +633,10 @@ footer {
   color: white;
 }
 
+#alge-voorwaarde {
+  color: white;
+}
+
 #algemene-voorwaarden-link {
   text-decoration: underline;
   color: var(--white);
